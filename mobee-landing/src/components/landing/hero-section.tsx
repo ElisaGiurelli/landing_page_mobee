@@ -55,8 +55,7 @@ export default function HeroSection({ openDemoModal }: HeroSectionProps) {
                 variant="outline"
                 className="font-heading font-semibold border-purple-200 text-purple-700 hover:bg-purple-50 rounded-full px-8 py-4 text-lg"
               >
-                Sei curioso di scoprire?{" "}
-                <ArrowRight className="w-5 h-5 ml-2" />
+                Sei curioso di scoprire? <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
             </div>
           </motion.div>
@@ -72,19 +71,18 @@ export default function HeroSection({ openDemoModal }: HeroSectionProps) {
                 <MobeeLogo className="text-purple-600" width={80} height={22} />
               </div>
 
-              <div className="grid grid-cols-3 gap-4 mb-6">
-                {[...Array(6)].map((_, i) => (
-                  <div
-                    key={i}
-                    className={`h-16 rounded-lg ${
-                      i < 3 ? "bg-yellow-200" : "bg-gray-100"
-                    }`}
-                  />
-                ))}
+              <div className="grid  gap-4 mb-6">
+                <img
+                  src="/dashboard-screenshot.png"
+                  alt="Dashboard AI Analytics"
+                  className="w-full rounded-lg mb-6"
+                />
               </div>
 
               <div className="text-center">
-                <p className="font-body text-sm text-gray-500 mb-2">Dashboard AI</p>
+                <p className="font-body text-sm text-gray-500 mb-2">
+                  Dashboard AI
+                </p>
                 <p className="font-body font-semibold text-gray-800">
                   Insights intelligenti sui tuoi talenti
                 </p>

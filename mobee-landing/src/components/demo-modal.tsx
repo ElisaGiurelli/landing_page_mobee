@@ -413,7 +413,7 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
 
             {/* Privacy Notice */}
             <p className="text-center text-sm text-gray-500 mt-6 leading-relaxed">
-              Cliccando su "Invia Richiesta Demo" accetti di essere contattato
+              Cliccando su &quot;Invia Richiesta Demo&quot; accetti di essere contattato
               dal team Mobee per organizzare la tua demo personalizzata
             </p>
           </form>

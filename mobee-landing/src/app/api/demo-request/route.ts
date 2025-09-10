@@ -87,7 +87,6 @@ export async function POST(request: NextRequest) {
 
     // Try to send emails, but don't fail if they don't work
     let emailSuccess = false;
-    let emailError = null;
 
     try {
       console.log('Attempting to send emails...');
@@ -101,7 +100,6 @@ export async function POST(request: NextRequest) {
       console.log('Emails sent successfully!');
       
     } catch (error) {
-      emailError = error;
       console.error('Email sending failed:', error);
       
       // Log detailed error for debugging

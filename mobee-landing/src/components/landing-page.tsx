@@ -130,18 +130,11 @@ export default function LandingPage() {
 
             <motion.div {...scaleIn} className="relative">
               <div className="bg-white rounded-2xl p-8 shadow-2xl">
-                <div className="grid grid-cols-4 gap-4 mb-6">
-                  {[...Array(8)].map((_, i) => (
-                    <div
-                      key={i}
-                      className={`h-12 rounded-lg ${
-                        [0, 1, 4, 5].includes(i)
-                          ? "bg-purple-100"
-                          : "bg-gray-50"
-                      }`}
-                    />
-                  ))}
-                </div>
+                <img 
+                  src="/screenshot-dashboard.png" 
+                  alt="Dashboard AI Analytics" 
+                  className="w-full rounded-lg mb-6"
+                />
                 <div className="bg-purple-50 rounded-lg p-4 text-center">
                   <p className="font-heading text-purple-700 font-semibold">
                     Dashboard AI
