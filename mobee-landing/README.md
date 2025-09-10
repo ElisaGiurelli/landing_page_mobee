@@ -1,3 +1,6 @@
+comandi per avviare cluade  npx @anthropic-ai/claude-code
+per installarlo npm  install -g @anthropic-ai/claude-code
+
 # Mobee - Landing Page
 
 Sito web per la startup **Mobee**, la prima piattaforma AI certificata in Italia per valorizzare i talenti aziendali.

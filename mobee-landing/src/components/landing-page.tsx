@@ -176,8 +176,8 @@ export default function LandingPage() {
                 <Sparkles className="w-4 h-4 text-purple-500 absolute top-1 right-1" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">mobee</h1>
-                <p className="text-xs text-purple-500 font-medium">
+                <h1 className="text-2xl font-heading font-bold text-gray-900">mobee</h1>
+                <p className="text-xs text-purple-500 font-body font-medium">
                   AI Talent Management
                 </p>
               </div>
@@ -186,13 +186,13 @@ export default function LandingPage() {
             <nav className="hidden md:flex items-center gap-8">
               <a
                 href="#funzionalita"
-                className="text-gray-600 hover:text-purple-500 font-medium transition-colors"
+                className="text-gray-600 hover:text-purple-500 font-body font-medium transition-colors"
               >
                 Funzionalità
               </a>
               <a
                 href="#vantaggi"
-                className="text-gray-600 hover:text-purple-500 font-medium transition-colors"
+                className="text-gray-600 hover:text-purple-500 font-body font-medium transition-colors"
               >
                 Vantaggi
               </a>
@@ -216,7 +216,7 @@ export default function LandingPage() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-6">
+              <h1 className="font-heading text-5xl md:text-6xl font-bold leading-tight mb-6">
                 Costruisci un lavoro dove i{" "}
                 <span className="text-yellow-500">talenti</span>
                 <br /> scelgono di
@@ -224,14 +224,14 @@ export default function LandingPage() {
                 <br />
               </h1>
 
-              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+              <p className="font-body text-xl text-gray-600 mb-8 leading-relaxed">
                 Mobee è la piattaforma che aiuta PMI e mid-market a eliminare il
                 caos organizzativo e far crescere il business partendo dalle
                 persone che hanno già.
               </p>
 
               <div className="bg-yellow-100/60 border-l-4 border-yellow-500 p-6 mb-8 rounded-r-lg">
-                <p className="italic text-gray-700 font-medium">
+                <p className="italic font-body text-gray-700 font-medium">
                   &ldquo;Aiutiamo le aziende a valorizzare il talento che hanno
                   già, come un alveare dove ogni persona conta&rdquo;
                 </p>
@@ -241,7 +241,7 @@ export default function LandingPage() {
                 <Button
                   onClick={openDemoModal}
                   size="lg"
-                  className="bg-purple-600 hover:bg-purple-700 text-white rounded-full px-8 py-4 text-lg"
+                  className="font-heading font-semibold bg-purple-600 hover:bg-purple-700 text-white rounded-full px-8 py-4 text-lg"
                 >
                   <Calendar className="w-5 h-5 mr-2" />
                   Prenota una Demo
@@ -249,7 +249,7 @@ export default function LandingPage() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-purple-200 text-purple-700 hover:bg-purple-50 rounded-full px-8 py-4 text-lg"
+                  className="font-heading font-semibold border-purple-200 text-purple-700 hover:bg-purple-50 rounded-full px-8 py-4 text-lg"
                 >
                   Sei curioso di scoprire?{" "}
                   <ArrowRight className="w-5 h-5 ml-2" />
@@ -266,7 +266,7 @@ export default function LandingPage() {
               <div className="relative bg-white rounded-3xl shadow-2xl p-8">
                 <div className="flex items-center gap-3 mb-6">
                   <Hexagon className="w-8 h-8 text-purple-500 fill-yellow-400" />
-                  <span className="font-bold text-xl text-gray-900">mobee</span>
+                  <span className="font-heading font-bold text-xl text-gray-900">mobee</span>
                 </div>
 
                 <div className="grid grid-cols-3 gap-4 mb-6">
@@ -281,8 +281,8 @@ export default function LandingPage() {
                 </div>
 
                 <div className="text-center">
-                  <p className="text-sm text-gray-500 mb-2">Dashboard AI</p>
-                  <p className="font-semibold text-gray-800">
+                  <p className="font-body text-sm text-gray-500 mb-2">Dashboard AI</p>
+                  <p className="font-body font-semibold text-gray-800">
                     Insights intelligenti sui tuoi talenti
                   </p>
                 </div>
@@ -310,10 +310,10 @@ export default function LandingPage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h2 className="font-heading text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               Un problema che viviamo ogni giorno
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="font-body text-xl text-gray-600 max-w-3xl mx-auto">
               Le aziende faticano a coinvolgere i dipendenti e collocarli nei
               ruoli giusti, causando insoddisfazione, turnover elevato e perdita
               di talenti.
@@ -414,11 +414,11 @@ export default function LandingPage() {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-800">
+              <h2 className="font-heading text-4xl md:text-5xl font-bold mb-6 text-gray-800">
                 AI per valorizzare i{" "}
                 <span className="text-purple-500">talenti esistenti</span>
               </h2>
-              <p className="text-xl text-gray-600 mb-8">
+              <p className="font-body text-xl text-gray-600 mb-8">
                 Mobee è la prima piattaforma AI Assistant in Italia per Talent
                 Management che aumenta l&apos;engagement e semplifica la
                 pianificazione in base a skill, disponibilità e preferenze.
@@ -440,16 +440,16 @@ export default function LandingPage() {
                     <div className="bg-[#f8f0ff] rounded-full p-4 mb-3 inline-block">
                       <item.icon className="w-6 h-6 text-purple-500" />
                     </div>
-                    <p className="text-sm font-medium">{item.label}</p>
+                    <p className="font-body text-sm font-medium">{item.label}</p>
                   </motion.div>
                 ))}
               </div>
 
               <div className="bg-white/60 backdrop-blur-sm rounded-lg p-6 border border-purple-200">
-                <p className="text-lg font-semibold mb-2 text-gray-800">
+                <p className="font-body text-lg font-semibold mb-2 text-gray-800">
                   Risultati: Più engagement, più retention, meno caos operativo
                 </p>
-                <p className="text-gray-600">
+                <p className="font-body text-gray-600">
                   La differenza? Non solo dashboard: Mobee AI propone la
                   prossima azione chiara e prioritaria.
                 </p>
@@ -477,8 +477,8 @@ export default function LandingPage() {
                 </div>
 
                 <div className="bg-purple-50 rounded-lg p-4 text-center">
-                  <p className="text-purple-700 font-semibold">Dashboard AI</p>
-                  <p className="text-purple-500 text-sm">
+                  <p className="font-heading text-purple-700 font-semibold">Dashboard AI</p>
+                  <p className="font-body text-purple-500 text-sm">
                     Insights intelligenti sui tuoi talenti
                   </p>
                 </div>
@@ -497,10 +497,10 @@ export default function LandingPage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h2 className="font-heading text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               Le Funzionalità di Mobee
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="font-body text-xl text-gray-600 max-w-3xl mx-auto">
               Le tre funzionalità chiave della nostra piattaforma AI per talent
               management
             </p>
@@ -521,22 +521,22 @@ export default function LandingPage() {
                     >
                       <feature.icon className="w-8 h-8 text-white" />
                     </div>
-                    <CardTitle className="text-2xl font-bold text-gray-800 mb-3">
+                    <CardTitle className="font-heading text-2xl font-bold text-gray-800 mb-3">
                       {feature.title}
                     </CardTitle>
-                    <p className="text-gray-600 leading-relaxed">
+                    <p className="font-body text-gray-600 leading-relaxed">
                       {feature.description}
                     </p>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-3">
-                      <p className="font-semibold text-gray-900 mb-4">
+                      <p className="font-body font-semibold text-gray-900 mb-4">
                         Funzioni principali:
                       </p>
                       {feature.benefits.map((benefit, idx) => (
                         <div key={idx} className="flex items-start gap-3">
                           <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                          <p className="text-gray-600">{benefit}</p>
+                          <p className="font-body text-gray-600">{benefit}</p>
                         </div>
                       ))}
                     </div>
@@ -555,7 +555,7 @@ export default function LandingPage() {
             <div className="bg-purple-50 border border-purple-100 rounded-lg p-6 inline-block">
               <div className="flex items-center gap-2 text-purple-500">
                 <Sparkles className="w-5 h-5" />
-                <p className="font-semibold text-gray-700">
+                <p className="font-body font-semibold text-gray-700">
                   Tutte le funzionalità sono completamente integrate tra loro
                   per un&apos;esperienza utente fluida
                 </p>
@@ -574,11 +574,11 @@ export default function LandingPage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            <h2 className="font-heading text-4xl md:text-5xl font-bold mb-6">
               Investire nei <span className="text-yellow-500">talenti</span>{" "}
               conviene
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="font-body text-xl text-gray-600 max-w-3xl mx-auto">
               Scopri come Mobee trasforma la gestione dei talenti in un
               vantaggio competitivo misurabile per la tua azienda
             </p>
@@ -609,10 +609,10 @@ export default function LandingPage() {
                     >
                       <benefit.icon className="w-6 h-6" />
                     </div>
-                    <CardTitle className="text-xl font-bold text-gray-900 mb-3">
+                    <CardTitle className="font-heading text-xl font-bold text-gray-900 mb-3">
                       {benefit.title}
                     </CardTitle>
-                    <p className="text-gray-600 text-sm leading-relaxed">
+                    <p className="font-body text-gray-600 text-sm leading-relaxed">
                       {benefit.description}
                     </p>
                   </CardHeader>
@@ -641,7 +641,7 @@ export default function LandingPage() {
                       >
                         {benefit.metric}
                       </p>
-                      <p className="text-gray-600 text-sm">{benefit.detail}</p>
+                      <p className="font-body text-gray-600 text-sm">{benefit.detail}</p>
                     </div>
                   </CardContent>
                 </Card>
@@ -656,10 +656,10 @@ export default function LandingPage() {
             className="mt-16 text-center"
           >
             <div className="bg-white rounded-2xl p-8 border border-purple-100 shadow-sm">
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">
+              <h3 className="font-heading text-2xl font-bold text-gray-800 mb-4">
                 Meno caos operativo, più risultati
               </h3>
-              <p className="text-gray-600 mb-6">
+              <p className="font-body text-gray-600 mb-6">
                 Visualizzazione dashboard con metriche di performance del team
               </p>
               <div className="grid grid-cols-3 gap-4 max-w-md mx-auto">
@@ -672,7 +672,7 @@ export default function LandingPage() {
                   />
                 ))}
               </div>
-              <p className="text-sm text-gray-600 mt-4 font-medium">
+              <p className="font-body text-sm text-gray-600 mt-4 font-medium">
                 Dashboard Performance Team
               </p>
             </div>
@@ -688,7 +688,7 @@ export default function LandingPage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h2 className="font-heading text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               Per chi è Mobee?
             </h2>
           </motion.div>
@@ -708,10 +708,10 @@ export default function LandingPage() {
                       <target.icon className="w-6 h-6 text-purple-500" />
                     </div>
                   </div>
-                  <h3 className={`text-xl font-bold ${target.color} mb-3`}>
+                  <h3 className={`font-heading text-xl font-bold ${target.color} mb-3`}>
                     {target.title}
                   </h3>
-                  <p className="text-gray-600 leading-relaxed">
+                  <p className="font-body text-gray-600 leading-relaxed">
                     {target.description}
                   </p>
                 </Card>
@@ -729,10 +729,10 @@ export default function LandingPage() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-800">
+            <h2 className="font-heading text-4xl md:text-5xl font-bold mb-6 text-gray-800">
               Pronto a valorizzare i talenti nella tua azienda?
             </h2>
-            <p className="text-xl text-gray-600 mb-10">
+            <p className="font-body text-xl text-gray-600 mb-10">
               Richiedi una demo personalizzata e scopri come Mobee può
               trasformare il tuo team.
             </p>
@@ -741,7 +741,7 @@ export default function LandingPage() {
               <Button
                 onClick={openDemoModal}
                 size="lg"
-                className="bg-purple-600 hover:bg-purple-700 text-white rounded-full px-8 py-4 text-lg"
+                className="font-heading font-semibold bg-purple-600 hover:bg-purple-700 text-white rounded-full px-8 py-4 text-lg"
               >
                 <Calendar className="w-5 h-5 mr-2" />
                 Prenota una Demo
@@ -759,9 +759,9 @@ export default function LandingPage() {
             <div>
               <div className="flex items-center gap-3 mb-4">
                 <Hexagon className="w-8 h-8 text-purple-400 fill-yellow-400" />
-                <span className="text-2xl font-bold">mobee</span>
+                <span className="font-heading text-2xl font-bold">mobee</span>
               </div>
-              <p className="text-gray-400 leading-relaxed">
+              <p className="font-body text-gray-400 leading-relaxed">
                 Aiutiamo le aziende a valorizzare il talento che hanno già, come
                 un alveare dove ogni persona conta.
               </p>
@@ -769,14 +769,14 @@ export default function LandingPage() {
 
             {/* Quick Links */}
             <div>
-              <h4 className="font-bold text-lg mb-4">Link rapidi</h4>
+              <h4 className="font-heading font-bold text-lg mb-4">Link rapidi</h4>
               <div className="space-y-2">
                 {["Home", "Funzionalità", "Vantaggi", "Pricing", "Blog"].map(
                   (link) => (
                     <a
                       key={link}
                       href="#"
-                      className="block text-gray-400 hover:text-white transition-colors"
+                      className="font-body block text-gray-400 hover:text-white transition-colors"
                     >
                       {link}
                     </a>
@@ -787,7 +787,7 @@ export default function LandingPage() {
 
             {/* Resources */}
             <div>
-              <h4 className="font-bold text-lg mb-4">Risorse</h4>
+              <h4 className="font-heading font-bold text-lg mb-4">Risorse</h4>
               <div className="space-y-2">
                 {[
                   "Documentazione",
@@ -799,7 +799,7 @@ export default function LandingPage() {
                   <a
                     key={link}
                     href="#"
-                    className="block text-gray-400 hover:text-white transition-colors"
+                    className="font-body block text-gray-400 hover:text-white transition-colors"
                   >
                     {link}
                   </a>
@@ -809,24 +809,24 @@ export default function LandingPage() {
 
             {/* Contact */}
             <div>
-              <h4 className="font-bold text-lg mb-4">Contatti</h4>
+              <h4 className="font-heading font-bold text-lg mb-4">Contatti</h4>
               <div className="space-y-3">
                 <div className="flex items-center gap-3 text-gray-400">
                   <Mail className="w-5 h-5" />
-                  <span>mobee.mirai@gmail.com</span>
+                  <span className="font-body">mobee.mirai@gmail.com</span>
                 </div>
                 <div className="flex items-center gap-3 text-gray-400">
                   <Phone className="w-5 h-5" />
-                  <span>+39 338 1903839</span>
+                  <span className="font-body">+39 338 1903839</span>
                 </div>
                 <div className="flex items-center gap-3 text-gray-400">
                   <MapPin className="w-5 h-5" />
-                  <span>Milano, Italia</span>
+                  <span className="font-body">Milano, Italia</span>
                 </div>
               </div>
 
               <div className="mt-6">
-                <h5 className="font-semibold mb-3">Newsletter</h5>
+                <h5 className="font-body font-semibold mb-3">Newsletter</h5>
                 <div className="flex gap-2">
                   <Input
                     type="email"
@@ -848,17 +848,17 @@ export default function LandingPage() {
 
           <div className="border-t border-gray-800 mt-12 pt-8">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-              <p className="text-gray-400">
+              <p className="font-body text-gray-400">
                 © 2025 Mobee. Tutti i diritti riservati.
               </p>
               <div className="flex gap-6 text-gray-400">
-                <a href="#" className="hover:text-white transition-colors">
+                <a href="#" className="font-body hover:text-white transition-colors">
                   Privacy Policy
                 </a>
-                <a href="#" className="hover:text-white transition-colors">
+                <a href="#" className="font-body hover:text-white transition-colors">
                   Termini di Servizio
                 </a>
-                <a href="#" className="hover:text-white transition-colors">
+                <a href="#" className="font-body hover:text-white transition-colors">
                   Cookie Policy
                 </a>
               </div>

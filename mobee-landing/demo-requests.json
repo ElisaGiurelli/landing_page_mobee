@@ -19,5 +19,13 @@
     "cognome": "Giurelli",
     "email": "elisa.giurelli@gmail.com",
     "telefono": "+393381903373"
+  },
+  {
+    "timestamp": "2025-09-10T12:15:15.810Z",
+    "nome": "elisa",
+    "cognome": "giurelli",
+    "email": "elisa.giurelli@gmail.com",
+    "azienda": "nexa",
+    "ruolo": "hr manager"
   }
 ]
