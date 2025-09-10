@@ -1,6 +1,71 @@
 comandi per avviare cluade  npx @anthropic-ai/claude-code
 per installarlo npm  install -g @anthropic-ai/claude-code
 
+ 🔄 WORKFLOW per AGGIORNARE il sito dopo modifiche
+
+  ✅ PROCESSO AUTOMATICO (Raccomandato):
+
+  1. Fai le tue modifiche localmente
+  - Modifica i file che vuoi in mobee-landing/src/
+  - Testa localmente con: npm run dev
+
+  2. Commit e Push su GitHub:
+  cd "C:\Users\elisa\landing_page_mobee\mobee-landing"
+  git add .
+  git commit -m "Descrivi cosa hai modificato"
+  git push origin main
+
+  3. Deploy AUTOMATICO! 🚀
+  - Vercel/Netlify rileva automaticamente i cambiamenti su GitHub
+  - Avvia il build e deploy automaticamente
+  - Sito aggiornato in 2-3 minuti
+
+  📱 Come monitorare il deploy:
+
+  Vercel:
+  - Dashboard: https://vercel.com/dashboard
+  - Vedi lo stato del deploy in tempo reale
+  - Ricevi notifiche quando è completato
+
+  Netlify:
+  - Dashboard: https://app.netlify.com
+  - Log del build visibili live
+  - Notifiche di deploy completato
+
+  ⚡ Script RAPIDO per aggiornamenti:
+
+  Puoi usare il file deploy.bat che ho già creato:
+
+  cd "C:\Users\elisa\landing_page_mobee\mobee-landing"
+  ./deploy.bat
+
+  Questo script:
+  1. ✅ Testa il build localmente
+  2. ✅ Commit automatico con timestamp
+  3. ✅ Push su GitHub
+  4. ✅ Deploy automatico parte da solo
+
+  🎯 ESEMPIO PRATICO:
+
+  # 1. Vai nella directory
+  cd "C:\Users\elisa\landing_page_mobee\mobee-landing"
+
+  # 2. Modifica quello che vuoi, poi:
+  git add .
+  git commit -m "Aggiornato testo hero section"
+  git push origin main
+
+  # 3. Aspetta 2-3 minuti → Sito aggiornato!
+
+  🔍 Per verificare che funzioni:
+
+  1. Controllo locale: Il banner dice "VERSIONE TEST"
+  2. Controllo remoto: Il footer mostra "v0.1.0-test"
+  3. Timestamp: Ogni modifica ha un timestamp nel deploy log
+
+  Il sistema è completamente automatizzato! Ogni push su GitHub = deploy automatico del sito. Zero configurazione aggiuntiva
+  richiesta.
+
 # Mobee - Landing Page
 
 Sito web per la startup **Mobee**, la prima piattaforma AI certificata in Italia per valorizzare i talenti aziendali.

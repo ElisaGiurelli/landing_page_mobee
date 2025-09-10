@@ -51,11 +51,6 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50/30 to-yellow-50/20 overflow-x-hidden">
-      {/* Testing Banner */}
-      <div className="bg-purple-600 text-white text-center py-2 text-sm font-medium relative z-50">
-        🚀 VERSIONE TEST - Sito in sviluppo per testing interno del team
-      </div>
-      
       <DecorativeHexagons />
 
       {/* Header */}
@@ -135,9 +130,9 @@ export default function LandingPage() {
 
             <motion.div {...scaleIn} className="relative">
               <div className="bg-white rounded-2xl p-8 shadow-2xl">
-                <img 
-                  src="/screenshot-dashboard.png" 
-                  alt="Dashboard AI Analytics" 
+                <img
+                  src="/screenshot-dashboard.png"
+                  alt="Dashboard AI Analytics"
                   className="w-full rounded-lg mb-6"
                 />
                 <div className="bg-purple-50 rounded-lg p-4 text-center">
