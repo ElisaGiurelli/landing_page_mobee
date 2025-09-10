@@ -27,5 +27,22 @@
     "email": "elisa.giurelli@gmail.com",
     "azienda": "nexa",
     "ruolo": "hr manager"
+  },
+  {
+    "timestamp": "2025-09-10T16:50:48.308Z",
+    "nome": "Test",
+    "cognome": "User",
+    "email": "test@example.com",
+    "azienda": "TestCorp",
+    "ruolo": "Tester",
+    "telefono": "+393381903373"
+  },
+  {
+    "timestamp": "2025-09-10T16:53:39.678Z",
+    "nome": "test",
+    "cognome": "giurelli",
+    "email": "elisa.giurelli@gmail.com",
+    "azienda": "nexa",
+    "ruolo": "hr manager"
   }
 ]

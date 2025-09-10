@@ -43,6 +43,15 @@ export const metadata: Metadata = {
     width: "device-width",
     initialScale: 1,
   },
+  icons: {
+    icon: [
+      { url: '/bee-icon.svg', sizes: '32x32', type: 'image/svg+xml' },
+      { url: '/icon', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/bee-icon.svg', sizes: '180x180', type: 'image/svg+xml' },
+    ],
+  },
 };
 
 export default function RootLayout({
