@@ -51,6 +51,11 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50/30 to-yellow-50/20 overflow-x-hidden">
+      {/* Testing Banner */}
+      <div className="bg-purple-600 text-white text-center py-2 text-sm font-medium relative z-50">
+        🚀 VERSIONE TEST - Sito in sviluppo per testing interno del team
+      </div>
+      
       <DecorativeHexagons />
 
       {/* Header */}
@@ -388,6 +393,7 @@ export default function LandingPage() {
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <p className="font-body text-gray-400">
                 © 2025 Mobee. Tutti i diritti riservati.
+                <span className="ml-4 text-xs opacity-70">v0.1.0-test</span>
               </p>
               <div className="flex gap-6 text-gray-400">
                 <a
