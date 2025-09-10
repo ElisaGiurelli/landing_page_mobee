@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -24,6 +24,8 @@ import {
   Sparkles,
   Hexagon,
   Zap,
+  ClipboardList,
+  User,
 } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
@@ -48,7 +50,7 @@ export default function LandingPage() {
         "Report automatici su engagement",
         "Planning & scheduling facilitato",
       ],
-      color: "from-purple-400 to-purple-600",
+      color: "from-purple-200 to-purple-300",
     },
     {
       icon: Target,
@@ -60,7 +62,7 @@ export default function LandingPage() {
         "Ottimizzazione basata su disponibilità",
         "Previsione di carico di lavoro",
       ],
-      color: "from-yellow-400 to-orange-500",
+      color: "from-yellow-200 to-orange-200",
     },
     {
       icon: TrendingUp,
@@ -72,7 +74,7 @@ export default function LandingPage() {
         "Percorsi di crescita personalizzati",
         "Raccomandazioni formative specifiche",
       ],
-      color: "from-green-400 to-teal-600",
+      color: "from-green-200 to-teal-300",
     },
   ];
 
@@ -84,7 +86,7 @@ export default function LandingPage() {
         "Dipendenti più coinvolti e produttivi grazie all'allocazione intelligente",
       metric: "+32%",
       detail: "Incremento medio engagement",
-      color: "bg-green-100 text-green-800 border-green-200",
+      color: "bg-green-50 text-green-600 border-green-200",
     },
     {
       icon: Users,
@@ -93,7 +95,7 @@ export default function LandingPage() {
         "Fidelizzazione dei talenti attraverso percorsi di crescita personalizzati",
       metric: "-27%",
       detail: "Riduzione abbandono",
-      color: "bg-blue-100 text-blue-800 border-blue-200",
+      color: "bg-blue-50 text-blue-600 border-blue-200",
     },
     {
       icon: Star,
@@ -102,7 +104,7 @@ export default function LandingPage() {
         "Collaboratori più motivati grazie a ruoli allineati alle loro competenze",
       metric: "+40%",
       detail: "Aumento soddisfazione",
-      color: "bg-purple-100 text-purple-800 border-purple-200",
+      color: "bg-purple-50 text-purple-500 border-purple-200",
     },
     {
       icon: TrendingDown,
@@ -111,10 +113,35 @@ export default function LandingPage() {
         "Riduzione significativa dei costi legati al turnover e onboarding",
       metric: "-35%",
       detail: "Risparmio medio annuo",
-      color: "bg-orange-100 text-orange-800 border-orange-200",
+      color: "bg-orange-50 text-orange-600 border-orange-200",
     },
   ];
-
+  const targetAudience = [
+    {
+      icon: Briefcase,
+      title: "Per i CEO",
+      description: "Che vogliono crescita senza perdita di talenti.",
+      color: "text-purple-500",
+    },
+    {
+      icon: ClipboardList,
+      title: "Per l'HR",
+      description: "Che vuole tempo per la strategia e meno operatività.",
+      color: "text-purple-500",
+    },
+    {
+      icon: Users,
+      title: "Per i Manager",
+      description: "Che vogliono team motivati, produttivi e autonomi.",
+      color: "text-purple-500",
+    },
+    {
+      icon: User,
+      title: "Per le Persone",
+      description: "Che vogliono essere ascoltate, valorizzate e crescere.",
+      color: "text-purple-500",
+    },
+  ];
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50/30 to-yellow-50/20 overflow-x-hidden">
       {/* Decorative Elements */}
@@ -145,12 +172,12 @@ export default function LandingPage() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="relative">
-                <Hexagon className="w-10 h-10 text-purple-600 fill-yellow-400" />
-                <Sparkles className="w-4 h-4 text-purple-600 absolute top-1 right-1" />
+                <Hexagon className="w-10 h-10 text-purple-500 fill-yellow-400" />
+                <Sparkles className="w-4 h-4 text-purple-500 absolute top-1 right-1" />
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-gray-900">mobee</h1>
-                <p className="text-xs text-purple-600 font-medium">
+                <p className="text-xs text-purple-500 font-medium">
                   AI Talent Management
                 </p>
               </div>
@@ -159,23 +186,17 @@ export default function LandingPage() {
             <nav className="hidden md:flex items-center gap-8">
               <a
                 href="#funzionalita"
-                className="text-gray-600 hover:text-purple-600 font-medium transition-colors"
+                className="text-gray-600 hover:text-purple-500 font-medium transition-colors"
               >
                 Funzionalità
               </a>
               <a
                 href="#vantaggi"
-                className="text-gray-600 hover:text-purple-600 font-medium transition-colors"
+                className="text-gray-600 hover:text-purple-500 font-medium transition-colors"
               >
                 Vantaggi
               </a>
-              <a
-                href="#demo"
-                className="text-gray-600 hover:text-purple-600 font-medium transition-colors"
-              >
-                Demo
-              </a>
-              <Button 
+              <Button
                 onClick={openDemoModal}
                 className="bg-purple-600 hover:bg-purple-700 text-white rounded-full px-6"
               >
@@ -195,10 +216,6 @@ export default function LandingPage() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <Badge className="bg-purple-100 text-purple-800 border-purple-200 mb-6">
-                🏆 Prima piattaforma AI certificata in Italia
-              </Badge>
-
               <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-6">
                 Costruisci un lavoro dove i{" "}
                 <span className="text-yellow-500">talenti</span>
@@ -215,8 +232,8 @@ export default function LandingPage() {
 
               <div className="bg-yellow-100/60 border-l-4 border-yellow-500 p-6 mb-8 rounded-r-lg">
                 <p className="italic text-gray-700 font-medium">
-                  &ldquo;Aiutiamo le aziende a valorizzare il talento che hanno già,
-                  come un alveare dove ogni persona conta&rdquo;
+                  &ldquo;Aiutiamo le aziende a valorizzare il talento che hanno
+                  già, come un alveare dove ogni persona conta&rdquo;
                 </p>
               </div>
 
@@ -248,7 +265,7 @@ export default function LandingPage() {
             >
               <div className="relative bg-white rounded-3xl shadow-2xl p-8">
                 <div className="flex items-center gap-3 mb-6">
-                  <Hexagon className="w-8 h-8 text-purple-600 fill-yellow-400" />
+                  <Hexagon className="w-8 h-8 text-purple-500 fill-yellow-400" />
                   <span className="font-bold text-xl text-gray-900">mobee</span>
                 </div>
 
@@ -265,7 +282,7 @@ export default function LandingPage() {
 
                 <div className="text-center">
                   <p className="text-sm text-gray-500 mb-2">Dashboard AI</p>
-                  <p className="font-semibold text-gray-900">
+                  <p className="font-semibold text-gray-800">
                     Insights intelligenti sui tuoi talenti
                   </p>
                 </div>
@@ -274,7 +291,7 @@ export default function LandingPage() {
                 <motion.div
                   animate={{ y: [-10, 10, -10] }}
                   transition={{ duration: 3, repeat: Infinity }}
-                  className="absolute -top-4 -right-4 bg-yellow-400 rounded-full p-3 shadow-lg"
+                  className="absolute -top-4 -right-4  bg-yellow-400 rounded-full p-3 shadow-lg"
                 >
                   <Zap className="w-6 h-6 text-white" />
                 </motion.div>
@@ -367,7 +384,7 @@ export default function LandingPage() {
       </section>
 
       {/* Solution Section */}
-      <section className="py-20 bg-gradient-to-r from-purple-600 to-purple-800 text-white relative overflow-hidden">
+      <section className="py-20 bg-gradient-to-r from-purple-100 to-purple-200 text-gray-700 relative overflow-hidden">
         <div className="absolute inset-0">
           {[...Array(6)].map((_, i) => (
             <motion.div
@@ -397,17 +414,17 @@ export default function LandingPage() {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-800">
                 AI per valorizzare i{" "}
-                <span className="text-yellow-400">talenti esistenti</span>
+                <span className="text-purple-500">talenti esistenti</span>
               </h2>
-              <p className="text-xl text-purple-100 mb-8">
+              <p className="text-xl text-gray-600 mb-8">
                 Mobee è la prima piattaforma AI Assistant in Italia per Talent
                 Management che aumenta l&apos;engagement e semplifica la
                 pianificazione in base a skill, disponibilità e preferenze.
               </p>
 
-              <div className="flex gap-4 mb-8">
+              <div className="flex gap-4 mb-8 ms-10 sm:ms-0">
                 {[
                   { icon: Briefcase, label: "Valutazione AI" },
                   { icon: Users, label: "Allocazione intelligente" },
@@ -420,19 +437,19 @@ export default function LandingPage() {
                     transition={{ duration: 0.6, delay: index * 0.2 }}
                     className="text-center"
                   >
-                    <div className="bg-yellow-400 rounded-full p-4 mb-3 inline-block">
-                      <item.icon className="w-6 h-6 text-purple-800" />
+                    <div className="bg-[#f8f0ff] rounded-full p-4 mb-3 inline-block">
+                      <item.icon className="w-6 h-6 text-purple-500" />
                     </div>
                     <p className="text-sm font-medium">{item.label}</p>
                   </motion.div>
                 ))}
               </div>
 
-              <div className="bg-purple-700/50 rounded-lg p-6 border border-purple-500/30">
-                <p className="text-lg font-semibold mb-2">
+              <div className="bg-white/60 backdrop-blur-sm rounded-lg p-6 border border-purple-200">
+                <p className="text-lg font-semibold mb-2 text-gray-800">
                   Risultati: Più engagement, più retention, meno caos operativo
                 </p>
-                <p className="text-purple-100">
+                <p className="text-gray-600">
                   La differenza? Non solo dashboard: Mobee AI propone la
                   prossima azione chiara e prioritaria.
                 </p>
@@ -452,8 +469,8 @@ export default function LandingPage() {
                       key={i}
                       className={`h-12 rounded-lg ${
                         [0, 1, 4, 5].includes(i)
-                          ? "bg-yellow-200"
-                          : "bg-gray-100"
+                          ? "bg-purple-100"
+                          : "bg-gray-50"
                       }`}
                     />
                   ))}
@@ -461,7 +478,7 @@ export default function LandingPage() {
 
                 <div className="bg-purple-50 rounded-lg p-4 text-center">
                   <p className="text-purple-700 font-semibold">Dashboard AI</p>
-                  <p className="text-purple-600 text-sm">
+                  <p className="text-purple-500 text-sm">
                     Insights intelligenti sui tuoi talenti
                   </p>
                 </div>
@@ -497,14 +514,14 @@ export default function LandingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.2 }}
               >
-                <Card className="h-full hover:shadow-xl transition-all duration-300 border-0 bg-white/80 backdrop-blur-sm">
+                <Card className="h-full hover:shadow-md transition-all duration-500 border border-gray-100 bg-white rounded-2xl p-8">
                   <CardHeader className="text-center pb-6">
                     <div
                       className={`mx-auto mb-4 p-4 rounded-2xl bg-gradient-to-r ${feature.color} inline-block`}
                     >
                       <feature.icon className="w-8 h-8 text-white" />
                     </div>
-                    <CardTitle className="text-2xl font-bold text-gray-900 mb-3">
+                    <CardTitle className="text-2xl font-bold text-gray-800 mb-3">
                       {feature.title}
                     </CardTitle>
                     <p className="text-gray-600 leading-relaxed">
@@ -535,10 +552,10 @@ export default function LandingPage() {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="text-center mt-12"
           >
-            <div className="bg-purple-50 border border-purple-200 rounded-lg p-6 inline-block">
-              <div className="flex items-center gap-2 text-purple-700">
+            <div className="bg-purple-50 border border-purple-100 rounded-lg p-6 inline-block">
+              <div className="flex items-center gap-2 text-purple-500">
                 <Sparkles className="w-5 h-5" />
-                <p className="font-semibold">
+                <p className="font-semibold text-gray-700">
                   Tutte le funzionalità sono completamente integrate tra loro
                   per un&apos;esperienza utente fluida
                 </p>
@@ -576,13 +593,15 @@ export default function LandingPage() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
                 <Card
-                  className={`text-center border-2 ${benefit.color
-                    .replace("bg-", "border-")
-                    .replace("text-", "border-")
-                    .replace(
-                      "-800",
-                      "-200"
-                    )} hover:shadow-lg transition-all duration-300 h-full`}
+                  className={`text-center border rounded-2xl p-8 bg-white hover:shadow-md transition-all duration-500 h-full ${
+                    benefit.color.includes("green")
+                      ? "border-green-200"
+                      : benefit.color.includes("blue")
+                      ? "border-blue-200"
+                      : benefit.color.includes("purple")
+                      ? "border-purple-200"
+                      : "border-orange-200"
+                  }`}
                 >
                   <CardHeader className="pb-4">
                     <div
@@ -599,15 +618,26 @@ export default function LandingPage() {
                   </CardHeader>
                   <CardContent>
                     <div
-                      className={`bg-white rounded-lg p-4 border ${benefit.color
-                        .replace("bg-", "border-")
-                        .replace("text-", "border-")
-                        .replace("-800", "-200")}`}
+                      className={`bg-gray-50/50 rounded-lg p-4 border ${
+                        benefit.color.includes("green")
+                          ? "border-green-100"
+                          : benefit.color.includes("blue")
+                          ? "border-blue-100"
+                          : benefit.color.includes("purple")
+                          ? "border-purple-100"
+                          : "border-orange-100"
+                      }`}
                     >
                       <p
-                        className={`text-3xl font-bold ${
-                          benefit.color.split(" ")[1]
-                        } mb-1`}
+                        className={`text-3xl font-bold mb-1 ${
+                          benefit.color.includes("green")
+                            ? "text-green-500"
+                            : benefit.color.includes("blue")
+                            ? "text-blue-500"
+                            : benefit.color.includes("purple")
+                            ? "text-purple-500"
+                            : "text-orange-500"
+                        }`}
                       >
                         {benefit.metric}
                       </p>
@@ -625,11 +655,11 @@ export default function LandingPage() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="mt-16 text-center"
           >
-            <div className="bg-purple-50 rounded-2xl p-8 border border-purple-200">
-              <h3 className="text-2xl font-bold text-purple-700 mb-4">
+            <div className="bg-white rounded-2xl p-8 border border-purple-100 shadow-sm">
+              <h3 className="text-2xl font-bold text-gray-800 mb-4">
                 Meno caos operativo, più risultati
               </h3>
-              <p className="text-purple-600 mb-6">
+              <p className="text-gray-600 mb-6">
                 Visualizzazione dashboard con metriche di performance del team
               </p>
               <div className="grid grid-cols-3 gap-4 max-w-md mx-auto">
@@ -637,12 +667,12 @@ export default function LandingPage() {
                   <div
                     key={i}
                     className={`h-8 rounded ${
-                      i < 6 ? "bg-green-200" : "bg-gray-200"
+                      i < 6 ? "bg-green-100" : "bg-gray-100"
                     }`}
                   />
                 ))}
               </div>
-              <p className="text-sm text-purple-600 mt-4 font-medium">
+              <p className="text-sm text-gray-600 mt-4 font-medium">
                 Dashboard Performance Team
               </p>
             </div>
@@ -650,18 +680,59 @@ export default function LandingPage() {
         </div>
       </section>
 
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              Per chi è Mobee?
+            </h2>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {targetAudience.map((target, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50, scale: 0.95 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="h-full"
+              >
+                <Card className="h-full bg-white text-center p-8 rounded-2xl border-gray-200 hover:shadow-purple-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                  <div className="flex justify-center mb-4">
+                    <div className="bg-purple-100 p-3 rounded-full">
+                      <target.icon className="w-6 h-6 text-purple-500" />
+                    </div>
+                  </div>
+                  <h3 className={`text-xl font-bold ${target.color} mb-3`}>
+                    {target.title}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    {target.description}
+                  </p>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-purple-600 to-purple-800 text-white">
+      <section className="py-20 bg-gradient-to-r from-purple-200 to-purple-300 text-gray-700">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-800">
               Pronto a valorizzare i talenti nella tua azienda?
             </h2>
-            <p className="text-xl text-purple-100 mb-10">
+            <p className="text-xl text-gray-600 mb-10">
               Richiedi una demo personalizzata e scopri come Mobee può
               trasformare il tuo team.
             </p>
@@ -670,18 +741,10 @@ export default function LandingPage() {
               <Button
                 onClick={openDemoModal}
                 size="lg"
-                className="bg-yellow-500 hover:bg-yellow-600 text-purple-900 rounded-full px-8 py-4 text-lg font-semibold"
+                className="bg-purple-600 hover:bg-purple-700 text-white rounded-full px-8 py-4 text-lg"
               >
                 <Calendar className="w-5 h-5 mr-2" />
                 Prenota una Demo
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-white text-white hover:bg-white hover:text-purple-800 rounded-full px-8 py-4 text-lg"
-              >
-                <Mail className="w-5 h-5 mr-2" />
-                Contattaci
               </Button>
             </div>
           </motion.div>
@@ -774,7 +837,7 @@ export default function LandingPage() {
                   />
                   <Button
                     size="sm"
-                    className="bg-purple-600 hover:bg-purple-700"
+                    className="bg-purple-500 hover:bg-purple-700"
                   >
                     <ArrowRight className="w-4 h-4" />
                   </Button>
@@ -803,10 +866,10 @@ export default function LandingPage() {
           </div>
         </div>
       </footer>
-      
+
       {/* Demo Modal */}
       <DemoModal isOpen={isDemoModalOpen} onClose={closeDemoModal} />
-      
+
       {/* Toast Notifications */}
       <Toaster />
     </div>

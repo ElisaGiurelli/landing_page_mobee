@@ -1,11 +1,28 @@
-"use client"
+"use client";
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { X, Calendar, Loader2 } from "lucide-react";
+import {
+  X,
+  Calendar,
+  Loader2,
+  Hexagon,
+  Sparkles,
+  User,
+  Mail,
+  Building,
+  Phone,
+  Briefcase,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+  DialogOverlay,
+} from "@/components/ui/dialog";
 import toast from "react-hot-toast";
 
 interface DemoModalProps {
@@ -31,17 +48,17 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
     ruolo: "",
     telefono: "",
   });
-  
+
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<Partial<FormData>>({});
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    
+    setFormData((prev) => ({ ...prev, [name]: value }));
+
     // Clear error when user starts typing
     if (errors[name as keyof FormData]) {
-      setErrors(prev => ({ ...prev, [name]: "" }));
+      setErrors((prev) => ({ ...prev, [name]: "" }));
     }
   };
 
@@ -76,13 +93,13 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
 
     setIsLoading(true);
-    
+
     try {
       const response = await fetch("/api/demo-request", {
         method: "POST",
@@ -95,11 +112,14 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
       const result = await response.json();
 
       if (response.ok) {
-        toast.success("Richiesta inviata con successo! Ti contatteremo entro 24 ore.", {
-          duration: 4000,
-          position: "top-center",
-        });
-        
+        toast.success(
+          "Richiesta inviata con successo! Ti contatteremo entro 24 ore.",
+          {
+            duration: 4000,
+            position: "top-center",
+          }
+        );
+
         // Reset form
         setFormData({
           nome: "",
@@ -109,14 +129,16 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
           ruolo: "",
           telefono: "",
         });
-        
+
         // Close modal after 2 seconds
         setTimeout(() => {
           onClose();
         }, 2000);
-        
       } else {
-        toast.error(result.message || "Errore nell'invio della richiesta. Riprova più tardi.");
+        toast.error(
+          result.message ||
+            "Errore nell'invio della richiesta. Riprova più tardi."
+        );
       }
     } catch (error) {
       console.error("Error submitting demo request:", error);
@@ -144,41 +166,89 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-md max-w-[95vw] p-0 overflow-hidden bg-white rounded-2xl border-0 shadow-2xl">
+      <DialogOverlay className="bg-black/20 backdrop-blur-sm" />
+      <DialogContent
+        className="max-w-2xl mx-auto p-0 border-0 bg-transparent overflow-visible"
+        showCloseButton={false}
+      >
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          transition={{ duration: 0.2 }}
-          className="relative"
+          initial={{ opacity: 0, scale: 0.9, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.9, y: 20 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          className="relative bg-white rounded-3xl shadow-2xl overflow-hidden"
         >
-          {/* Header */}
-          <div className="bg-gradient-to-r from-purple-600 to-purple-800 p-6 text-white">
-            <button
-              onClick={handleClose}
-              disabled={isLoading}
-              className="absolute top-4 right-4 p-2 hover:bg-white/20 rounded-full transition-colors disabled:opacity-50"
+          {/* Decorative Hexagons */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              className="absolute -top-6 -right-6 text-yellow-200/40"
             >
-              <X className="w-4 h-4" />
-            </button>
-            
-            <div className="flex items-center gap-3 mb-2">
-              <Calendar className="w-6 h-6 text-yellow-400" />
-              <DialogTitle className="text-2xl font-bold">
-                Prenota la tua Demo Personalizzata
-              </DialogTitle>
+              <Hexagon className="w-24 h-24" />
+            </motion.div>
+            <motion.div
+              animate={{ rotate: -360 }}
+              transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+              className="absolute -bottom-8 -left-8 text-purple-200/30"
+            >
+              <Hexagon className="w-32 h-32" />
+            </motion.div>
+            <motion.div
+              animate={{ y: [-10, 10, -10] }}
+              transition={{ duration: 4, repeat: Infinity }}
+              className="absolute top-1/2 right-8 text-yellow-300/20"
+            >
+              <Hexagon className="w-16 h-16" />
+            </motion.div>
+          </div>
+
+          {/* Close Button */}
+          <button
+            onClick={handleClose}
+            disabled={isLoading}
+            className="absolute top-6 right-6 z-10 p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors duration-200 disabled:opacity-50"
+          >
+            <X className="w-5 h-5 text-gray-600" />
+          </button>
+
+          {/* Header */}
+          <div className="relative bg-gradient-to-br from-gray-50 to-purple-50/30 px-8 py-10 border-b border-gray-100">
+            <div className="flex items-start gap-4">
+              <div className="relative">
+                <div className="bg-yellow-400 rounded-2xl p-3">
+                  <Calendar className="w-8 h-8 text-purple-800" />
+                </div>
+                <motion.div
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="absolute -top-1 -right-1"
+                >
+                  <Sparkles className="w-5 h-5 text-yellow-500" />
+                </motion.div>
+              </div>
+              <div className="flex-1">
+                <DialogTitle className="text-3xl font-bold text-gray-900 mb-2">
+                  Prenota la tua Demo Personalizzata
+                </DialogTitle>
+                <DialogDescription className="text-gray-600 text-lg">
+                  Compila il form e ti contatteremo entro 24 ore per organizzare
+                  una demo su misura per la tua azienda
+                </DialogDescription>
+              </div>
             </div>
-            
-            <DialogDescription className="text-purple-100">
-              Compila il form e ti contatteremo entro 24 ore
-            </DialogDescription>
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="p-6 space-y-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label htmlFor="nome" className="block text-sm font-medium text-gray-700 mb-1">
+          <form onSubmit={handleSubmit} className="relative z-10 p-8">
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* Nome */}
+              <div className="space-y-2">
+                <label
+                  htmlFor="nome"
+                  className="flex items-center gap-2 text-gray-700 font-medium"
+                >
+                  <User className="w-4 h-4 text-purple-600" />
                   Nome *
                 </label>
                 <Input
@@ -188,7 +258,9 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
                   value={formData.nome}
                   onChange={handleInputChange}
                   disabled={isLoading}
-                  className={`${errors.nome ? "border-red-500" : "border-gray-300"} focus:ring-purple-500 focus:border-purple-500`}
+                  className={`${
+                    errors.nome ? "border-red-500" : "border-gray-200"
+                  } focus:border-purple-400 focus:ring-purple-200 rounded-xl h-12 transition-colors duration-300`}
                   placeholder="Il tuo nome"
                 />
                 {errors.nome && (
@@ -196,8 +268,9 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
                 )}
               </div>
 
-              <div>
-                <label htmlFor="cognome" className="block text-sm font-medium text-gray-700 mb-1">
+              {/* Cognome */}
+              <div className="space-y-2">
+                <label htmlFor="cognome" className="text-gray-700 font-medium">
                   Cognome *
                 </label>
                 <Input
@@ -207,37 +280,49 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
                   value={formData.cognome}
                   onChange={handleInputChange}
                   disabled={isLoading}
-                  className={`${errors.cognome ? "border-red-500" : "border-gray-300"} focus:ring-purple-500 focus:border-purple-500`}
+                  className={`${
+                    errors.cognome ? "border-red-500" : "border-gray-200"
+                  } focus:border-purple-400 focus:ring-purple-200 rounded-xl h-12 transition-colors duration-300`}
                   placeholder="Il tuo cognome"
                 />
                 {errors.cognome && (
                   <p className="mt-1 text-sm text-red-500">{errors.cognome}</p>
                 )}
               </div>
-            </div>
 
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                Email *
-              </label>
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                disabled={isLoading}
-                className={`${errors.email ? "border-red-500" : "border-gray-300"} focus:ring-purple-500 focus:border-purple-500`}
-                placeholder="nome@azienda.com"
-              />
-              {errors.email && (
-                <p className="mt-1 text-sm text-red-500">{errors.email}</p>
-              )}
-            </div>
+              {/* Email */}
+              <div className="space-y-2 md:col-span-2">
+                <label
+                  htmlFor="email"
+                  className="flex items-center gap-2 text-gray-700 font-medium"
+                >
+                  <Mail className="w-4 h-4 text-purple-600" />
+                  Email *
+                </label>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  disabled={isLoading}
+                  className={`${
+                    errors.email ? "border-red-500" : "border-gray-200"
+                  } focus:border-purple-400 focus:ring-purple-200 rounded-xl h-12 transition-colors duration-300`}
+                  placeholder="nome@azienda.com"
+                />
+                {errors.email && (
+                  <p className="mt-1 text-sm text-red-500">{errors.email}</p>
+                )}
+              </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label htmlFor="azienda" className="block text-sm font-medium text-gray-700 mb-1">
+              {/* Azienda */}
+              <div className="space-y-2">
+                <label
+                  htmlFor="azienda"
+                  className="flex items-center gap-2 text-gray-700 font-medium"
+                >
+                  <Building className="w-4 h-4 text-purple-600" />
                   Azienda *
                 </label>
                 <Input
@@ -247,7 +332,9 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
                   value={formData.azienda}
                   onChange={handleInputChange}
                   disabled={isLoading}
-                  className={`${errors.azienda ? "border-red-500" : "border-gray-300"} focus:ring-purple-500 focus:border-purple-500`}
+                  className={`${
+                    errors.azienda ? "border-red-500" : "border-gray-200"
+                  } focus:border-purple-400 focus:ring-purple-200 rounded-xl h-12 transition-colors duration-300`}
                   placeholder="Nome dell'azienda"
                 />
                 {errors.azienda && (
@@ -255,8 +342,13 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
                 )}
               </div>
 
-              <div>
-                <label htmlFor="ruolo" className="block text-sm font-medium text-gray-700 mb-1">
+              {/* Ruolo */}
+              <div className="space-y-2">
+                <label
+                  htmlFor="ruolo"
+                  className="flex items-center gap-2 text-gray-700 font-medium"
+                >
+                  <Briefcase className="w-4 h-4 text-purple-600" />
                   Ruolo *
                 </label>
                 <Input
@@ -266,57 +358,68 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
                   value={formData.ruolo}
                   onChange={handleInputChange}
                   disabled={isLoading}
-                  className={`${errors.ruolo ? "border-red-500" : "border-gray-300"} focus:ring-purple-500 focus:border-purple-500`}
+                  className={`${
+                    errors.ruolo ? "border-red-500" : "border-gray-200"
+                  } focus:border-purple-400 focus:ring-purple-200 rounded-xl h-12 transition-colors duration-300`}
                   placeholder="Es. HR Manager, CEO, etc."
                 />
                 {errors.ruolo && (
                   <p className="mt-1 text-sm text-red-500">{errors.ruolo}</p>
                 )}
               </div>
+
+              {/* Telefono */}
+              <div className="space-y-2 md:col-span-2">
+                <label
+                  htmlFor="telefono"
+                  className="flex items-center gap-2 text-gray-700 font-medium"
+                >
+                  <Phone className="w-4 h-4 text-purple-600" />
+                  Telefono
+                </label>
+                <Input
+                  id="telefono"
+                  name="telefono"
+                  type="tel"
+                  value={formData.telefono}
+                  onChange={handleInputChange}
+                  disabled={isLoading}
+                  className="border-gray-200 focus:border-purple-400 focus:ring-purple-200 rounded-xl h-12 transition-colors duration-300"
+                  placeholder="+39 000 000 0000 (opzionale)"
+                />
+              </div>
             </div>
 
-            <div>
-              <label htmlFor="telefono" className="block text-sm font-medium text-gray-700 mb-1">
-                Telefono
-              </label>
-              <Input
-                id="telefono"
-                name="telefono"
-                type="tel"
-                value={formData.telefono}
-                onChange={handleInputChange}
-                disabled={isLoading}
-                className="border-gray-300 focus:ring-purple-500 focus:border-purple-500"
-                placeholder="+39 000 000 0000 (opzionale)"
-              />
-            </div>
-
-            <div className="pt-4">
+            {/* Submit Button */}
+            <div className="mt-8">
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-full font-semibold text-lg transition-colors disabled:opacity-50"
+                className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white rounded-2xl h-14 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50"
               >
                 {isLoading ? (
                   <>
-                    <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                    <Loader2 className="w-5 h-5 mr-3 animate-spin" />
                     Invio in corso...
                   </>
                 ) : (
                   <>
-                    <Calendar className="w-5 h-5 mr-2" />
+                    <Calendar className="w-5 h-5 mr-3" />
                     Invia Richiesta Demo
                   </>
                 )}
               </Button>
             </div>
 
-            <div className="text-center pt-2">
-              <p className="text-xs text-gray-500">
-                Cliccando su &ldquo;Invia Richiesta Demo&rdquo; accetti di essere contattato dal team Mobee
-              </p>
-            </div>
+            {/* Privacy Notice */}
+            <p className="text-center text-sm text-gray-500 mt-6 leading-relaxed">
+              Cliccando su "Invia Richiesta Demo" accetti di essere contattato
+              dal team Mobee per organizzare la tua demo personalizzata
+            </p>
           </form>
+
+          {/* Bottom Decoration */}
+          <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-yellow-400 via-purple-500 to-yellow-400"></div>
         </motion.div>
       </DialogContent>
     </Dialog>

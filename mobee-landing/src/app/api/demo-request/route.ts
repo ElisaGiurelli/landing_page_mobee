@@ -71,6 +71,7 @@ export async function POST(request: NextRequest) {
       cognome: sanitizedData.cognome,
       email: sanitizedData.email,
       azienda: sanitizedData.azienda,
+      ruolo: sanitizedData.ruolo,
       telefono: sanitizedData.telefono
     });
 
