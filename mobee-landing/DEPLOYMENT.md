@@ -16,8 +16,9 @@
 - Clicca "New site from Git"
 - Connetti GitHub e seleziona: `ElisaGiurelli/landing_page_mobee` 
 - Build settings:
-  - Build command: `cd mobee-landing && npm run build`
-  - Publish directory: `mobee-landing/.next`
+  - Root directory: `mobee-landing`
+  - Build command: `npm run build`
+  - Publish directory: `.next`
 - **Link sarà pronto in 3-5 minuti**
 
 ## 📋 Stato Attuale del Progetto
@@ -97,6 +98,11 @@ npm run build
 1. Controlla log di deploy sulla piattaforma
 2. Verifica che `package.json` sia corretto
 3. Assicurati che `next.config.ts` non abbia errori
+
+**"No Next.js version detected" Error?**
+- **Vercel:** Assicurati che sia configurato `Root Directory: mobee-landing`
+- **Netlify:** Imposta `Root Directory: mobee-landing` nelle build settings
+- Il progetto Next.js è nella sottocartella `mobee-landing/`, non nella root
 
 ## 🎯 Features Test Attive
 

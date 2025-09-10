@@ -1,0 +1,7 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "cd mobee-landing && npm run build",
+  "installCommand": "cd mobee-landing && npm install",
+  "outputDirectory": "mobee-landing/.next",
+  "rootDirectory": "mobee-landing"
+}

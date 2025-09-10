@@ -1,0 +1,14 @@
+{
+  "name": "mobee-landing-root",
+  "version": "1.0.0",
+  "description": "Mobee Landing Page Project",
+  "scripts": {
+    "build": "cd mobee-landing && npm run build",
+    "dev": "cd mobee-landing && npm run dev",
+    "install-deps": "cd mobee-landing && npm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ElisaGiurelli/landing_page_mobee.git"
+  }
+}
