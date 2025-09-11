@@ -308,7 +308,7 @@ export default function LandingPage() {
           <div className="grid md:grid-cols-4 gap-8">
             {/* Logo & Description */}
             <div>
-              <div className="flex items-center gap-3 mb-4">
+              <div className="flex items-center gap-3 ">
                 <MoobeLogo
                   className="text-purple-400"
                   width={140}
