@@ -1,4 +1,4 @@
-import nodemailer from 'nodemailer';
+import nodemailer, { Transporter } from 'nodemailer';
 
 interface DemoRequestData {
   nome: string;
@@ -19,18 +19,18 @@ interface EmailError {
 }
 
 interface LogContext {
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 // Structured error logging helper
-const logError = (functionName: string, phase: string, error: any, context: LogContext = {}): EmailError => {
+const logError = (functionName: string, phase: string, error: unknown, context: LogContext = {}): EmailError => {
   const timestamp = new Date().toISOString();
   const errorDetails = {
-    message: error?.message || 'Unknown error',
-    stack: error?.stack || 'No stack trace',
-    code: error?.code || 'NO_CODE',
-    errno: error?.errno || 'NO_ERRNO',
-    syscall: error?.syscall || 'NO_SYSCALL'
+    message: (error as Error)?.message || 'Unknown error',
+    stack: (error as Error)?.stack || 'No stack trace',
+    code: (error as NodeJS.ErrnoException)?.code || 'NO_CODE',
+    errno: (error as NodeJS.ErrnoException)?.errno || 'NO_ERRNO',
+    syscall: (error as NodeJS.ErrnoException)?.syscall || 'NO_SYSCALL'
   };
   
   console.error(`[${functionName}] Failed at ${phase}`, {
@@ -51,11 +51,14 @@ const logError = (functionName: string, phase: string, error: any, context: LogC
 };
 
 // Get appropriate status code based on error type and phase
-const getStatusCodeFromError = (error: any, phase: string): number => {
-  if (error?.code === 'EAUTH' || error?.code === 'ENOTFOUND' || error?.responseCode === 535) {
+const getStatusCodeFromError = (error: unknown, phase: string): number => {
+  const errCode = (error as NodeJS.ErrnoException)?.code;
+  const responseCode = (error as { responseCode?: number })?.responseCode;
+  
+  if (errCode === 'EAUTH' || errCode === 'ENOTFOUND' || responseCode === 535) {
     return 503; // Service unavailable - SMTP issues
   }
-  if (error?.code === 'ETIMEDOUT' || error?.code === 'ECONNREFUSED') {
+  if (errCode === 'ETIMEDOUT' || errCode === 'ECONNREFUSED') {
     return 503; // Service unavailable - connection issues
   }
   if (phase.includes('validation') || phase.includes('input')) {
@@ -68,14 +71,17 @@ const getStatusCodeFromError = (error: any, phase: string): number => {
 };
 
 // Get user-friendly error message
-const getUserFriendlyMessage = (phase: string, error: any): string => {
-  if (error?.code === 'EAUTH' || error?.responseCode === 535) {
+const getUserFriendlyMessage = (phase: string, error: unknown): string => {
+  const errCode = (error as NodeJS.ErrnoException)?.code;
+  const responseCode = (error as { responseCode?: number })?.responseCode;
+  
+  if (errCode === 'EAUTH' || responseCode === 535) {
     return 'Email service authentication failed. Please contact support.';
   }
-  if (error?.code === 'ETIMEDOUT') {
+  if (errCode === 'ETIMEDOUT') {
     return 'Email service temporarily unavailable due to timeout. Please try again later.';
   }
-  if (error?.code === 'ECONNREFUSED' || error?.code === 'ENOTFOUND') {
+  if (errCode === 'ECONNREFUSED' || errCode === 'ENOTFOUND') {
     return 'Email service temporarily unavailable. Please try again later.';
   }
   if (phase.includes('validation')) {
@@ -85,40 +91,42 @@ const getUserFriendlyMessage = (phase: string, error: any): string => {
 };
 
 // Input validation helper
-const validateDemoRequestData = (data: any): { isValid: boolean; errors: string[] } => {
+const validateDemoRequestData = (data: unknown): { isValid: boolean; errors: string[] } => {
   const errors: string[] = [];
   
-  if (!data) {
+  if (!data || typeof data !== 'object') {
     errors.push('No data provided');
     return { isValid: false, errors };
   }
   
-  if (!data.nome || typeof data.nome !== 'string' || data.nome.trim().length === 0) {
+  const dataObj = data as Record<string, unknown>;
+  
+  if (!dataObj.nome || typeof dataObj.nome !== 'string' || dataObj.nome.trim().length === 0) {
     errors.push('Nome is required and must be a non-empty string');
   }
   
-  if (!data.cognome || typeof data.cognome !== 'string' || data.cognome.trim().length === 0) {
+  if (!dataObj.cognome || typeof dataObj.cognome !== 'string' || dataObj.cognome.trim().length === 0) {
     errors.push('Cognome is required and must be a non-empty string');
   }
   
-  if (!data.email || typeof data.email !== 'string') {
+  if (!dataObj.email || typeof dataObj.email !== 'string') {
     errors.push('Email is required and must be a string');
   } else {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(data.email)) {
+    if (!emailRegex.test(dataObj.email)) {
       errors.push('Email must be a valid email address');
     }
   }
   
-  if (!data.azienda || typeof data.azienda !== 'string' || data.azienda.trim().length === 0) {
+  if (!dataObj.azienda || typeof dataObj.azienda !== 'string' || dataObj.azienda.trim().length === 0) {
     errors.push('Azienda is required and must be a non-empty string');
   }
   
-  if (!data.ruolo || typeof data.ruolo !== 'string' || data.ruolo.trim().length === 0) {
+  if (!dataObj.ruolo || typeof dataObj.ruolo !== 'string' || dataObj.ruolo.trim().length === 0) {
     errors.push('Ruolo is required and must be a non-empty string');
   }
   
-  if (data.telefono && typeof data.telefono !== 'string') {
+  if (dataObj.telefono && typeof dataObj.telefono !== 'string') {
     errors.push('Telefono must be a string if provided');
   }
   
@@ -126,7 +134,7 @@ const validateDemoRequestData = (data: any): { isValid: boolean; errors: string[
 };
 
 // SMTP configuration validation
-const validateSMTPConfig = (): { isValid: boolean; errors: string[]; config: any } => {
+const validateSMTPConfig = (): { isValid: boolean; errors: string[]; config: Record<string, unknown> } => {
   const errors: string[] = [];
   const config = {
     host: process.env.SMTP_HOST || 'smtp.gmail.com',
@@ -152,14 +160,14 @@ const validateSMTPConfig = (): { isValid: boolean; errors: string[]; config: any
 };
 
 // Create transporter with automatic Ethereal fallback for development
-const createTransporter = async (): Promise<{ transporter: any; error?: EmailError }> => {
+const createTransporter = async (): Promise<{ transporter: Transporter | null; error?: EmailError }> => {
   const functionName = 'createTransporter';
   console.log(`[${functionName}] Starting email transporter creation`);
   
   try {
     // Validate SMTP configuration first
     console.log(`[${functionName}] Validating SMTP configuration`);
-    const smtpValidation = validateSMTPConfig();
+    validateSMTPConfig();
     
     const configInfo = {
       host: process.env.SMTP_HOST || 'smtp.gmail.com',
@@ -203,7 +211,7 @@ const createTransporter = async (): Promise<{ transporter: any; error?: EmailErr
         return { transporter };
         
       } catch (error) {
-        const emailError = logError(functionName, 'creating Ethereal test account', error, {
+        logError(functionName, 'creating Ethereal test account', error, {
           phase: 'ethereal_account_creation',
           host: 'smtp.ethereal.email'
         });
@@ -243,10 +251,10 @@ const createTransporter = async (): Promise<{ transporter: any; error?: EmailErr
     try {
       await transporter.verify();
       console.log(`[${functionName}] SMTP connection verified successfully`);
-    } catch (verifyError) {
+    } catch (verifyError: unknown) {
       console.warn(`[${functionName}] SMTP verification failed (will attempt to send anyway):`, {
-        error: verifyError.message,
-        code: verifyError.code
+        error: (verifyError as Error)?.message || 'Unknown error',
+        code: (verifyError as NodeJS.ErrnoException)?.code || 'NO_CODE'
       });
     }
     
@@ -265,7 +273,7 @@ const createTransporter = async (): Promise<{ transporter: any; error?: EmailErr
 };
 
 // Send notification email to admin
-export async function sendAdminNotification(data: DemoRequestData): Promise<{ success: boolean; result?: any; error?: EmailError }> {
+export async function sendAdminNotification(data: DemoRequestData): Promise<{ success: boolean; result?: unknown; error?: EmailError }> {
   const functionName = 'sendAdminNotification';
   const requestId = `admin_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
   
@@ -426,7 +434,7 @@ Ricevuta il: ${new Date().toLocaleString('it-IT')}`,
 }
 
 // Send confirmation email to user
-export async function sendUserConfirmation(data: DemoRequestData): Promise<{ success: boolean; result?: any; error?: EmailError }> {
+export async function sendUserConfirmation(data: DemoRequestData): Promise<{ success: boolean; result?: unknown; error?: EmailError }> {
   const functionName = 'sendUserConfirmation';
   const requestId = `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
   
