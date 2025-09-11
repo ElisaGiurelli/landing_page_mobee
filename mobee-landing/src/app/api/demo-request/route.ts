@@ -39,12 +39,19 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check required environment variables
-    const requiredEnvVars = ['SMTP_HOST', 'SMTP_USER', 'SMTP_PASS', 'ADMIN_EMAIL'];
-    const missingEnvVars = requiredEnvVars.filter(envVar => !process.env[envVar]);
-    
-    if (missingEnvVars.length > 0) {
-      console.error('Missing environment variables:', missingEnvVars);
+    // Log environment configuration for debugging
+    console.log('=== EMAIL CONFIGURATION CHECK ===');
+    console.log('SMTP_HOST:', process.env.SMTP_HOST ? 'configured' : 'missing');
+    console.log('SMTP_USER:', process.env.SMTP_USER ? 'configured' : 'missing');
+    console.log('SMTP_PASS:', process.env.SMTP_PASS ? 'configured' : 'missing');
+    console.log('ADMIN_EMAIL:', process.env.ADMIN_EMAIL ? 'configured' : 'missing');
+    console.log('NODE_ENV:', process.env.NODE_ENV);
+    console.log('VERCEL:', process.env.VERCEL);
+    console.log('==================================');
+
+    // Check required environment variables (but only fail if ADMIN_EMAIL is missing)
+    if (!process.env.ADMIN_EMAIL) {
+      console.error('Critical: ADMIN_EMAIL environment variable is missing');
       return NextResponse.json(
         { 
           success: false, 
@@ -52,6 +59,12 @@ export async function POST(request: NextRequest) {
         },
         { status: 500 }
       );
+    }
+
+    // If SMTP credentials are missing, the email service will fall back to Ethereal
+    const hasSMTPCredentials = process.env.SMTP_USER && process.env.SMTP_PASS;
+    if (!hasSMTPCredentials) {
+      console.warn('SMTP credentials not configured, email service will use Ethereal test accounts');
     }
 
     // Sanitize data
@@ -87,20 +100,36 @@ export async function POST(request: NextRequest) {
 
     // Try to send emails, but don't fail if they don't work
     let emailSuccess = false;
+    let emailResults: Record<string, unknown> = {};
 
     try {
       console.log('Attempting to send emails...');
-      const emailPromises = [
-        sendAdminNotification(sanitizedData),
-        sendUserConfirmation(sanitizedData)
-      ];
-
-      await Promise.all(emailPromises);
-      emailSuccess = true;
-      console.log('Emails sent successfully!');
+      
+      // Send admin notification
+      const adminResult = await sendAdminNotification(sanitizedData);
+      console.log('Admin notification result:', adminResult);
+      
+      // Send user confirmation
+      const userResult = await sendUserConfirmation(sanitizedData);
+      console.log('User confirmation result:', userResult);
+      
+      emailResults = { admin: adminResult, user: userResult };
+      
+      // Check if both emails were sent successfully
+      if (adminResult.success && userResult.success) {
+        emailSuccess = true;
+        console.log('Both emails sent successfully!');
+      } else {
+        console.error('One or both emails failed:', {
+          adminSuccess: adminResult.success,
+          userSuccess: userResult.success,
+          adminError: adminResult.error,
+          userError: userResult.error
+        });
+      }
       
     } catch (error) {
-      console.error('Email sending failed:', error);
+      console.error('Email sending failed with exception:', error);
       
       // Log detailed error for debugging
       if (error instanceof Error) {

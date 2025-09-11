@@ -58,7 +58,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <MobeeLogo className="text-purple-600" width={120} height={34} />
+              <MobeeLogo className="text-purple-600" width={120} height={84} />
             </div>
 
             <nav className="hidden md:flex items-center gap-8">

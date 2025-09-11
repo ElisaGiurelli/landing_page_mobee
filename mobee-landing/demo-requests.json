@@ -44,5 +44,22 @@
     "email": "elisa.giurelli@gmail.com",
     "azienda": "nexa",
     "ruolo": "hr manager"
+  },
+  {
+    "timestamp": "2025-09-11T12:20:11.251Z",
+    "nome": "elisa",
+    "cognome": "giurelli",
+    "email": "elisa.giurelli@gmail.com",
+    "azienda": "nexa",
+    "ruolo": "hr manager"
+  },
+  {
+    "timestamp": "2025-09-11T12:21:21.117Z",
+    "nome": "max",
+    "cognome": "giu",
+    "email": "mgiurelli@taal.it",
+    "azienda": "taal",
+    "ruolo": "ceo",
+    "telefono": "3355399945"
   }
 ]

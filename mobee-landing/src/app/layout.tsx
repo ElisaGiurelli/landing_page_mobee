@@ -16,12 +16,20 @@ const ibmPlexSans = IBM_Plex_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Mobee - AI Talent Management Platform",
-  description: "Prima piattaforma AI certificata in Italia per valorizzare i talenti aziendali",
-  keywords: ["AI", "Talent Management", "Risorse Umane", "HR", "Italia", "Mobee"],
-  authors: [{ name: "Mobee Team" }],
-  creator: "Mobee",
-  publisher: "Mobee",
+  title: "Moobee - AI Talent Management Platform",
+  description:
+    "Prima piattaforma AI certificata in Italia per valorizzare i talenti aziendali",
+  keywords: [
+    "AI",
+    "Talent Management",
+    "Risorse Umane",
+    "HR",
+    "Italia",
+    "Moobee",
+  ],
+  authors: [{ name: "Moobee Team" }],
+  creator: "Moobee",
+  publisher: "Moobee",
   robots: {
     index: true,
     follow: true,
@@ -30,14 +38,16 @@ export const metadata: Metadata = {
     type: "website",
     locale: "it_IT",
     url: "https://mobee.it",
-    title: "Mobee - AI Talent Management Platform",
-    description: "Prima piattaforma AI certificata in Italia per valorizzare i talenti aziendali",
+    title: "Moobee - AI Talent Management Platform",
+    description:
+      "Prima piattaforma AI certificata in Italia per valorizzare i talenti aziendali",
     siteName: "Mobee",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mobee - AI Talent Management Platform",
-    description: "Prima piattaforma AI certificata in Italia per valorizzare i talenti aziendali",
+    title: "Moobee - AI Talent Management Platform",
+    description:
+      "Prima piattaforma AI certificata in Italia per valorizzare i talenti aziendali",
   },
   viewport: {
     width: "device-width",
@@ -45,12 +55,10 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/bee-icon.svg', sizes: '32x32', type: 'image/svg+xml' },
-      { url: '/icon', sizes: '32x32', type: 'image/png' },
+      { url: "/bee-icon.svg", sizes: "32x32", type: "image/svg+xml" },
+      { url: "/icon", sizes: "32x32", type: "image/png" },
     ],
-    apple: [
-      { url: '/bee-icon.svg', sizes: '180x180', type: 'image/svg+xml' },
-    ],
+    apple: [{ url: "/bee-icon.svg", sizes: "180x180", type: "image/svg+xml" }],
   },
 };
 
@@ -61,7 +69,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="it" className="scroll-smooth">
-      <body className={`${manrope.variable} ${ibmPlexSans.variable} font-body antialiased`}>
+      <body
+        className={`${manrope.variable} ${ibmPlexSans.variable} font-body antialiased`}
+      >
         {children}
       </body>
     </html>
