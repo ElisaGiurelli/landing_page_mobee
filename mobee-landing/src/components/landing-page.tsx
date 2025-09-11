@@ -55,10 +55,10 @@ export default function LandingPage() {
 
       {/* Header */}
       <header className="relative z-50 bg-white/80 backdrop-blur-md border-b border-purple-100/50">
-        <div className="max-w-7xl mx-auto px-6 py-4">
+        <div className="max-w-7xl mx-auto px-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <MoobeLogo className="text-purple-600" width={120} height={100} />
+              <MoobeLogo className="text-purple-600" width={160} height={130} />
             </div>
 
             <nav className="hidden md:flex items-center gap-8">
@@ -311,8 +311,8 @@ export default function LandingPage() {
               <div className="flex items-center gap-3 mb-4">
                 <MoobeLogo
                   className="text-purple-400"
-                  width={100}
-                  height={28}
+                  width={140}
+                  height={120}
                 />
               </div>
               <p className="font-body text-gray-400 leading-relaxed">

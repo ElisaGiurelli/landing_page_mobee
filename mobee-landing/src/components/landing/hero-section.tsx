@@ -68,7 +68,7 @@ export default function HeroSection({ openDemoModal }: HeroSectionProps) {
           >
             <div className="relative bg-white rounded-3xl shadow-2xl p-8">
               <div className="flex items-center gap-3 mb-6">
-                <MoobeLogo className="text-purple-600" width={80} height={22} />
+                <MoobeLogo className="text-purple-600" width={140} height={120} />
               </div>
 
               <div className="grid  gap-4 mb-6">
