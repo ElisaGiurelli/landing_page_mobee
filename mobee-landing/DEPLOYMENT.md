@@ -1,4 +1,4 @@
-# 🚀 Mobee Landing Page - Guida al Deployment
+# 🚀 Moobe Landing Page - Guida al Deployment
 
 ## 📍 Link Attivi per Testing
 
@@ -7,16 +7,16 @@
 **1. VERCEL (Metodo più veloce)**
 - Vai su: https://vercel.com
 - Clicca "Import Project" 
-- Connetti GitHub e seleziona: `ElisaGiurelli/landing_page_mobee`
+- Connetti GitHub e seleziona: `ElisaGiurelli/landing_page_moobe`
 - Vercel farà il deploy automatico
 - **Link sarà pronto in 2-3 minuti**
 
 **2. NETLIFY (Alternativa rapida)**
 - Vai su: https://netlify.com
 - Clicca "New site from Git"
-- Connetti GitHub e seleziona: `ElisaGiurelli/landing_page_mobee` 
+- Connetti GitHub e seleziona: `ElisaGiurelli/landing_page_moobe` 
 - Build settings:
-  - Root directory: `mobee-landing`
+  - Root directory: `moobe-landing`
   - Build command: `npm run build`
   - Publish directory: `.next`
 - **Link sarà pronto in 3-5 minuti**
@@ -24,7 +24,7 @@
 ## 📋 Stato Attuale del Progetto
 
 ✅ **Build Status:** Funzionante (testato con successo)  
-✅ **Git Repository:** https://github.com/ElisaGiurelli/landing_page_mobee.git  
+✅ **Git Repository:** https://github.com/ElisaGiurelli/landing_page_moobe.git  
 ✅ **Testing Features:** Banner test e versioning attivi  
 ✅ **Dependencies:** Tutte le dipendenze installate  
 ✅ **Next.js Config:** Configurato per deploy  
@@ -43,7 +43,7 @@
 1. **Modifica i file localmente**
 2. **Commit e push:**
    ```bash
-   cd "C:\Users\elisa\landing_page_mobee\mobee-landing"
+   cd "C:\Users\elisa\landing_page_mobee\moobe-landing"
    git add .
    git commit -m "Descrivi le tue modifiche"
    git push origin main
@@ -80,7 +80,7 @@ npm run deploy-vercel
 
 **Build Failed?**
 ```bash
-cd mobee-landing
+cd moobe-landing
 npm install
 npm run build
 # Controlla errori e correggi
@@ -100,9 +100,9 @@ npm run build
 3. Assicurati che `next.config.ts` non abbia errori
 
 **"No Next.js version detected" Error?**
-- **Vercel:** Assicurati che sia configurato `Root Directory: mobee-landing`
-- **Netlify:** Imposta `Root Directory: mobee-landing` nelle build settings
-- Il progetto Next.js è nella sottocartella `mobee-landing/`, non nella root
+- **Vercel:** Assicurati che sia configurato `Root Directory: moobe-landing`
+- **Netlify:** Imposta `Root Directory: moobe-landing` nelle build settings
+- Il progetto Next.js è nella sottocartella `moobe-landing/`, non nella root
 
 ## 🎯 Features Test Attive
 
@@ -120,5 +120,5 @@ npm run build
 ---
 
 **📧 Per supporto:** Contatta il team di sviluppo  
-**🔗 Repository:** https://github.com/ElisaGiurelli/landing_page_mobee  
+**🔗 Repository:** https://github.com/ElisaGiurelli/landing_page_moobe  
 **⚡ Status:** Ready for deployment

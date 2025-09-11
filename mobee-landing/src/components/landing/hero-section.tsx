@@ -4,7 +4,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Calendar, ArrowRight, Zap } from "lucide-react";
 import { motion } from "framer-motion";
-import MobeeLogo from "@/components/ui/mobee-logo";
+import MoobeLogo from "@/components/ui/mobee-logo";
 
 interface HeroSectionProps {
   openDemoModal: () => void;
@@ -29,7 +29,7 @@ export default function HeroSection({ openDemoModal }: HeroSectionProps) {
             </h1>
 
             <p className="font-body text-xl text-gray-600 mb-8 leading-relaxed">
-              Moobee è la piattaforma che aiuta PMI e mid-market a eliminare il
+              Moobe è la piattaforma che aiuta PMI e mid-market a eliminare il
               caos organizzativo e far crescere il business partendo dalle
               persone che hanno già.
             </p>
@@ -68,7 +68,7 @@ export default function HeroSection({ openDemoModal }: HeroSectionProps) {
           >
             <div className="relative bg-white rounded-3xl shadow-2xl p-8">
               <div className="flex items-center gap-3 mb-6">
-                <MobeeLogo className="text-purple-600" width={80} height={22} />
+                <MoobeLogo className="text-purple-600" width={80} height={22} />
               </div>
 
               <div className="grid  gap-4 mb-6">

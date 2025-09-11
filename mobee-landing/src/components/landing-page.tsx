@@ -17,7 +17,7 @@ import {
 import { motion } from "framer-motion";
 
 // Import UI components
-import MobeeLogo from "@/components/ui/mobee-logo";
+import MoobeLogo from "@/components/ui/mobee-logo";
 
 // Import our new components
 import HeroSection from "@/components/landing/hero-section";
@@ -58,7 +58,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <MobeeLogo className="text-purple-600" width={120} height={84} />
+              <MoobeLogo className="text-purple-600" width={120} height={100} />
             </div>
 
             <nav className="hidden md:flex items-center gap-8">
@@ -93,7 +93,7 @@ export default function LandingPage() {
                 <span className="text-purple-500">talenti esistenti</span>
               </h2>
               <p className="font-body text-xl text-gray-600 mb-8">
-                Mobee è la prima piattaforma AI Assistant in Italia per Talent
+                Moobe è la prima piattaforma AI Assistant in Italia per Talent
                 Management che aumenta l&apos;engagement e semplifica la
                 pianificazione in base a skill, disponibilità e preferenze.
               </p>
@@ -122,7 +122,7 @@ export default function LandingPage() {
                   Risultati: Più engagement, più retention, meno caos operativo
                 </p>
                 <p className="font-body text-gray-600">
-                  La differenza? Non solo dashboard: Mobee AI propone la
+                  La differenza? Non solo dashboard: Moobe AI propone la
                   prossima azione chiara e prioritaria.
                 </p>
               </div>
@@ -154,7 +154,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-6">
           <motion.div {...fadeInUp} className="text-center mb-16">
             <h2 className="section-title text-gray-900 mb-6">
-              Le Funzionalità di Mobee
+              Le Funzionalità di Moobe
             </h2>
             <p className="font-body text-xl text-gray-600 max-w-3xl mx-auto">
               Le tre funzionalità chiave della nostra piattaforma AI per talent
@@ -196,7 +196,7 @@ export default function LandingPage() {
               conviene
             </h2>
             <p className="font-body text-xl text-gray-600 max-w-3xl mx-auto">
-              Scopri come Mobee trasforma la gestione dei talenti in un
+              Scopri come Moobe trasforma la gestione dei talenti in un
               vantaggio competitivo misurabile per la tua azienda
             </p>
           </motion.div>
@@ -243,7 +243,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-6">
           <motion.div {...fadeInUp} className="text-center mb-16">
             <h2 className="section-title text-gray-900 mb-6">
-              Per chi è Mobee?
+              Per chi è Moobe?
             </h2>
           </motion.div>
 
@@ -285,7 +285,7 @@ export default function LandingPage() {
               Pronto a valorizzare i talenti nella tua azienda?
             </h2>
             <p className="font-body text-xl text-gray-600 mb-10">
-              Richiedi una demo personalizzata e scopri come Mobee può
+              Richiedi una demo personalizzata e scopri come Moobe può
               trasformare il tuo team.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -309,7 +309,7 @@ export default function LandingPage() {
             {/* Logo & Description */}
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <MobeeLogo
+                <MoobeLogo
                   className="text-purple-400"
                   width={100}
                   height={28}
@@ -387,7 +387,7 @@ export default function LandingPage() {
           <div className="border-t border-gray-800 mt-12 pt-8">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <p className="font-body text-gray-400">
-                © 2025 Mobee. Tutti i diritti riservati.
+                © 2025 Moobe. Tutti i diritti riservati.
                 <span className="ml-4 text-xs opacity-70">v0.1.0-test</span>
               </p>
               <div className="flex gap-6 text-gray-400">
