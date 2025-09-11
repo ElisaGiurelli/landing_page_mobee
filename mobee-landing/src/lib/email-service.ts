@@ -9,59 +9,308 @@ interface DemoRequestData {
   telefono?: string;
 }
 
-// Create transporter with automatic Ethereal fallback for development
-const createTransporter = async () => {
-  console.log('Creating email transporter with config:', {
-    host: process.env.SMTP_HOST || 'smtp.gmail.com',
-    port: process.env.SMTP_PORT || '587',
-    user: process.env.SMTP_USER ? 'configured' : 'missing',
-    pass: process.env.SMTP_PASS ? 'configured' : 'missing',
-  });
+interface EmailError {
+  statusCode: number;
+  message: string;
+  details: string;
+  timestamp: string;
+  functionName: string;
+  phase: string;
+}
 
-  // If we don't have proper SMTP credentials, create test account
-  if (!process.env.SMTP_USER || !process.env.SMTP_PASS || process.env.SMTP_USER === 'demo_user') {
-    console.log('Creating Ethereal test account for development...');
-    try {
-      const testAccount = await nodemailer.createTestAccount();
-      console.log('Ethereal test account created:', {
-        user: testAccount.user,
-        pass: testAccount.pass,
-        web: testAccount.web
-      });
-      
-      return nodemailer.createTransport({
-        host: 'smtp.ethereal.email',
-        port: 587,
-        secure: false,
-        auth: {
-          user: testAccount.user,
-          pass: testAccount.pass,
-        },
-      });
-    } catch (error) {
-      console.error('Failed to create test account:', error);
-      // Fallback to basic configuration
+interface LogContext {
+  [key: string]: any;
+}
+
+// Structured error logging helper
+const logError = (functionName: string, phase: string, error: any, context: LogContext = {}): EmailError => {
+  const timestamp = new Date().toISOString();
+  const errorDetails = {
+    message: error?.message || 'Unknown error',
+    stack: error?.stack || 'No stack trace',
+    code: error?.code || 'NO_CODE',
+    errno: error?.errno || 'NO_ERRNO',
+    syscall: error?.syscall || 'NO_SYSCALL'
+  };
+  
+  console.error(`[${functionName}] Failed at ${phase}`, {
+    timestamp,
+    error: errorDetails,
+    context,
+    fullError: error
+  });
+  
+  return {
+    statusCode: getStatusCodeFromError(error, phase),
+    message: getUserFriendlyMessage(phase, error),
+    details: `${functionName} - ${phase}: ${errorDetails.message}`,
+    timestamp,
+    functionName,
+    phase
+  };
+};
+
+// Get appropriate status code based on error type and phase
+const getStatusCodeFromError = (error: any, phase: string): number => {
+  if (error?.code === 'EAUTH' || error?.code === 'ENOTFOUND' || error?.responseCode === 535) {
+    return 503; // Service unavailable - SMTP issues
+  }
+  if (error?.code === 'ETIMEDOUT' || error?.code === 'ECONNREFUSED') {
+    return 503; // Service unavailable - connection issues
+  }
+  if (phase.includes('validation') || phase.includes('input')) {
+    return 400; // Bad request - validation errors
+  }
+  if (phase.includes('configuration') || phase.includes('setup')) {
+    return 500; // Internal server error - configuration issues
+  }
+  return 500; // Default internal server error
+};
+
+// Get user-friendly error message
+const getUserFriendlyMessage = (phase: string, error: any): string => {
+  if (error?.code === 'EAUTH' || error?.responseCode === 535) {
+    return 'Email service authentication failed. Please contact support.';
+  }
+  if (error?.code === 'ETIMEDOUT') {
+    return 'Email service temporarily unavailable due to timeout. Please try again later.';
+  }
+  if (error?.code === 'ECONNREFUSED' || error?.code === 'ENOTFOUND') {
+    return 'Email service temporarily unavailable. Please try again later.';
+  }
+  if (phase.includes('validation')) {
+    return 'Invalid email data provided. Please check your information.';
+  }
+  return 'Email service temporarily unavailable. Please try again later.';
+};
+
+// Input validation helper
+const validateDemoRequestData = (data: any): { isValid: boolean; errors: string[] } => {
+  const errors: string[] = [];
+  
+  if (!data) {
+    errors.push('No data provided');
+    return { isValid: false, errors };
+  }
+  
+  if (!data.nome || typeof data.nome !== 'string' || data.nome.trim().length === 0) {
+    errors.push('Nome is required and must be a non-empty string');
+  }
+  
+  if (!data.cognome || typeof data.cognome !== 'string' || data.cognome.trim().length === 0) {
+    errors.push('Cognome is required and must be a non-empty string');
+  }
+  
+  if (!data.email || typeof data.email !== 'string') {
+    errors.push('Email is required and must be a string');
+  } else {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(data.email)) {
+      errors.push('Email must be a valid email address');
     }
   }
+  
+  if (!data.azienda || typeof data.azienda !== 'string' || data.azienda.trim().length === 0) {
+    errors.push('Azienda is required and must be a non-empty string');
+  }
+  
+  if (!data.ruolo || typeof data.ruolo !== 'string' || data.ruolo.trim().length === 0) {
+    errors.push('Ruolo is required and must be a non-empty string');
+  }
+  
+  if (data.telefono && typeof data.telefono !== 'string') {
+    errors.push('Telefono must be a string if provided');
+  }
+  
+  return { isValid: errors.length === 0, errors };
+};
 
-  return nodemailer.createTransport({
+// SMTP configuration validation
+const validateSMTPConfig = (): { isValid: boolean; errors: string[]; config: any } => {
+  const errors: string[] = [];
+  const config = {
     host: process.env.SMTP_HOST || 'smtp.gmail.com',
-    port: parseInt(process.env.SMTP_PORT || '587'),
-    secure: false, // true for 465, false for other ports
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS,
-    },
-    // Add timeout and connection options
-    connectionTimeout: 10000, // 10 seconds
-    greetingTimeout: 5000, // 5 seconds
-    socketTimeout: 10000, // 10 seconds
-  });
+    port: process.env.SMTP_PORT || '587',
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
+    adminEmail: process.env.ADMIN_EMAIL
+  };
+  
+  if (!config.user) {
+    errors.push('SMTP_USER environment variable is required');
+  }
+  
+  if (!config.pass) {
+    errors.push('SMTP_PASS environment variable is required');
+  }
+  
+  if (!config.adminEmail) {
+    errors.push('ADMIN_EMAIL environment variable is required');
+  }
+  
+  return { isValid: errors.length === 0, errors, config };
+};
+
+// Create transporter with automatic Ethereal fallback for development
+const createTransporter = async (): Promise<{ transporter: any; error?: EmailError }> => {
+  const functionName = 'createTransporter';
+  console.log(`[${functionName}] Starting email transporter creation`);
+  
+  try {
+    // Validate SMTP configuration first
+    console.log(`[${functionName}] Validating SMTP configuration`);
+    const smtpValidation = validateSMTPConfig();
+    
+    const configInfo = {
+      host: process.env.SMTP_HOST || 'smtp.gmail.com',
+      port: process.env.SMTP_PORT || '587',
+      user: process.env.SMTP_USER ? 'configured' : 'missing',
+      pass: process.env.SMTP_PASS ? 'configured' : 'missing',
+      adminEmail: process.env.ADMIN_EMAIL ? 'configured' : 'missing'
+    };
+    
+    console.log(`[${functionName}] SMTP configuration:`, configInfo);
+
+    // If we don't have proper SMTP credentials, create test account
+    if (!process.env.SMTP_USER || !process.env.SMTP_PASS || process.env.SMTP_USER === 'demo_user') {
+      console.log(`[${functionName}] Missing production SMTP credentials, creating Ethereal test account`);
+      
+      try {
+        console.log(`[${functionName}] Requesting Ethereal test account`);
+        const testAccount = await nodemailer.createTestAccount();
+        
+        console.log(`[${functionName}] Ethereal test account created successfully:`, {
+          user: testAccount.user,
+          pass: testAccount.pass.substring(0, 4) + '***',
+          web: testAccount.web
+        });
+        
+        console.log(`[${functionName}] Creating Ethereal transporter`);
+        const transporter = nodemailer.createTransport({
+          host: 'smtp.ethereal.email',
+          port: 587,
+          secure: false,
+          auth: {
+            user: testAccount.user,
+            pass: testAccount.pass,
+          },
+          connectionTimeout: 10000,
+          greetingTimeout: 5000,
+          socketTimeout: 10000,
+        });
+        
+        console.log(`[${functionName}] Ethereal transporter created successfully`);
+        return { transporter };
+        
+      } catch (error) {
+        const emailError = logError(functionName, 'creating Ethereal test account', error, {
+          phase: 'ethereal_account_creation',
+          host: 'smtp.ethereal.email'
+        });
+        
+        console.log(`[${functionName}] Falling back to basic configuration after Ethereal failure`);
+        // Continue to fallback configuration
+      }
+    }
+
+    console.log(`[${functionName}] Creating production SMTP transporter`);
+    
+    const transporterConfig = {
+      host: process.env.SMTP_HOST || 'smtp.gmail.com',
+      port: parseInt(process.env.SMTP_PORT || '587'),
+      secure: false, // true for 465, false for other ports
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+      connectionTimeout: 10000, // 10 seconds
+      greetingTimeout: 5000, // 5 seconds
+      socketTimeout: 10000, // 10 seconds
+    };
+    
+    console.log(`[${functionName}] Transporter config:`, {
+      ...transporterConfig,
+      auth: {
+        user: transporterConfig.auth.user ? 'configured' : 'missing',
+        pass: transporterConfig.auth.pass ? 'configured' : 'missing'
+      }
+    });
+    
+    const transporter = nodemailer.createTransport(transporterConfig);
+    
+    // Test the connection
+    console.log(`[${functionName}] Testing SMTP connection`);
+    try {
+      await transporter.verify();
+      console.log(`[${functionName}] SMTP connection verified successfully`);
+    } catch (verifyError) {
+      console.warn(`[${functionName}] SMTP verification failed (will attempt to send anyway):`, {
+        error: verifyError.message,
+        code: verifyError.code
+      });
+    }
+    
+    console.log(`[${functionName}] Transporter created successfully`);
+    return { transporter };
+    
+  } catch (error) {
+    const emailError = logError(functionName, 'creating transporter', error, {
+      phase: 'transporter_creation',
+      smtpHost: process.env.SMTP_HOST || 'smtp.gmail.com',
+      smtpPort: process.env.SMTP_PORT || '587'
+    });
+    
+    return { transporter: null, error: emailError };
+  }
 };
 
 // Send notification email to admin
-export async function sendAdminNotification(data: DemoRequestData) {
-  const transporter = await createTransporter();
+export async function sendAdminNotification(data: DemoRequestData): Promise<{ success: boolean; result?: any; error?: EmailError }> {
+  const functionName = 'sendAdminNotification';
+  const requestId = `admin_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+  
+  console.log(`[${functionName}] Starting admin notification process - Request ID: ${requestId}`);
+  console.log(`[${functionName}] Input data:`, {
+    nome: data?.nome || 'missing',
+    cognome: data?.cognome || 'missing',
+    email: data?.email || 'missing',
+    azienda: data?.azienda || 'missing',
+    ruolo: data?.ruolo || 'missing',
+    telefono: data?.telefono || 'not provided'
+  });
+  
+  try {
+    // Validate input data
+    console.log(`[${functionName}] Validating input data - Request ID: ${requestId}`);
+    const validation = validateDemoRequestData(data);
+    
+    if (!validation.isValid) {
+      const error = new Error(`Input validation failed: ${validation.errors.join(', ')}`);
+      return {
+        success: false,
+        error: logError(functionName, 'input validation', error, {
+          requestId,
+          validationErrors: validation.errors,
+          receivedData: data
+        })
+      };
+    }
+    
+    console.log(`[${functionName}] Input validation passed - Request ID: ${requestId}`);
+    
+    // Create transporter
+    console.log(`[${functionName}] Creating email transporter - Request ID: ${requestId}`);
+    const transporterResult = await createTransporter();
+    
+    if (transporterResult.error || !transporterResult.transporter) {
+      return {
+        success: false,
+        error: transporterResult.error || logError(functionName, 'transporter creation', new Error('Failed to create transporter'), { requestId })
+      };
+    }
+    
+    const transporter = transporterResult.transporter;
+    console.log(`[${functionName}] Transporter created successfully - Request ID: ${requestId}`);
   
   const htmlContent = `
     <!DOCTYPE html>
@@ -126,12 +375,13 @@ export async function sendAdminNotification(data: DemoRequestData) {
     </html>
   `;
 
-  const mailOptions = {
-    from: `"Mobee Platform" <${process.env.SMTP_USER}>`,
-    to: process.env.ADMIN_EMAIL,
-    subject: `🎯 Nuova Richiesta Demo - ${data.nome} ${data.cognome}`,
-    html: htmlContent,
-    text: `Nuova richiesta demo da ${data.nome} ${data.cognome}
+    console.log(`[${functionName}] Preparing mail options - Request ID: ${requestId}`);
+    const mailOptions = {
+      from: `"Mobee Platform" <${process.env.SMTP_USER}>`,
+      to: process.env.ADMIN_EMAIL,
+      subject: `🎯 Nuova Richiesta Demo - ${data.nome} ${data.cognome}`,
+      html: htmlContent,
+      text: `Nuova richiesta demo da ${data.nome} ${data.cognome}
     
 Email: ${data.email}
 Azienda: ${data.azienda}
@@ -139,14 +389,89 @@ Ruolo: ${data.ruolo}
 ${data.telefono ? `Telefono: ${data.telefono}` : ''}
 
 Ricevuta il: ${new Date().toLocaleString('it-IT')}`,
-  };
+    };
 
-  return await transporter.sendMail(mailOptions);
+    // Send the email
+    console.log(`[${functionName}] Sending admin notification email - Request ID: ${requestId}`);
+    console.log(`[${functionName}] Mail options:`, {
+      from: mailOptions.from,
+      to: mailOptions.to,
+      subject: mailOptions.subject,
+      hasHtml: !!mailOptions.html,
+      hasText: !!mailOptions.text
+    });
+    
+    const result = await transporter.sendMail(mailOptions);
+    
+    console.log(`[${functionName}] Admin notification sent successfully - Request ID: ${requestId}`);
+    console.log(`[${functionName}] Send result:`, {
+      messageId: result.messageId,
+      accepted: result.accepted,
+      rejected: result.rejected,
+      pending: result.pending,
+      response: result.response
+    });
+    
+    return { success: true, result };
+    
+  } catch (error) {
+    const emailError = logError(functionName, 'sending admin notification', error, {
+      requestId,
+      recipientEmail: process.env.ADMIN_EMAIL,
+      senderData: data
+    });
+    
+    return { success: false, error: emailError };
+  }
 }
 
 // Send confirmation email to user
-export async function sendUserConfirmation(data: DemoRequestData) {
-  const transporter = await createTransporter();
+export async function sendUserConfirmation(data: DemoRequestData): Promise<{ success: boolean; result?: any; error?: EmailError }> {
+  const functionName = 'sendUserConfirmation';
+  const requestId = `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+  
+  console.log(`[${functionName}] Starting user confirmation process - Request ID: ${requestId}`);
+  console.log(`[${functionName}] Input data:`, {
+    nome: data?.nome || 'missing',
+    cognome: data?.cognome || 'missing',
+    email: data?.email || 'missing',
+    azienda: data?.azienda || 'missing',
+    ruolo: data?.ruolo || 'missing',
+    telefono: data?.telefono || 'not provided'
+  });
+  
+  try {
+    // Validate input data
+    console.log(`[${functionName}] Validating input data - Request ID: ${requestId}`);
+    const validation = validateDemoRequestData(data);
+    
+    if (!validation.isValid) {
+      const error = new Error(`Input validation failed: ${validation.errors.join(', ')}`);
+      return {
+        success: false,
+        error: logError(functionName, 'input validation', error, {
+          requestId,
+          validationErrors: validation.errors,
+          receivedData: data
+        })
+      };
+    }
+    
+    console.log(`[${functionName}] Input validation passed - Request ID: ${requestId}`);
+    
+    // Create transporter
+    console.log(`[${functionName}] Creating email transporter - Request ID: ${requestId}`);
+    const transporterResult = await createTransporter();
+    
+    if (transporterResult.error || !transporterResult.transporter) {
+      return {
+        success: false,
+        error: transporterResult.error || logError(functionName, 'transporter creation', new Error('Failed to create transporter'), { requestId })
+      };
+    }
+    
+    const transporter = transporterResult.transporter;
+    console.log(`[${functionName}] Transporter created successfully - Request ID: ${requestId}`);
   
   const htmlContent = `
     <!DOCTYPE html>
@@ -245,12 +570,13 @@ export async function sendUserConfirmation(data: DemoRequestData) {
     </html>
   `;
 
-  const mailOptions = {
-    from: `"Mobee Team" <${process.env.SMTP_USER}>`,
-    to: data.email,
-    subject: 'Conferma Richiesta Demo - Mobee AI Talent Management',
-    html: htmlContent,
-    text: `Ciao ${data.nome},
+    console.log(`[${functionName}] Preparing mail options - Request ID: ${requestId}`);
+    const mailOptions = {
+      from: `"Mobee Team" <${process.env.SMTP_USER}>`,
+      to: data.email,
+      subject: 'Conferma Richiesta Demo - Mobee AI Talent Management',
+      html: htmlContent,
+      text: `Ciao ${data.nome},
 
 Grazie per il tuo interesse in Mobee!
 
@@ -269,7 +595,38 @@ Team Mobee
 
 ---
 © 2025 Mobee - AI Talent Management Platform`,
-  };
+    };
 
-  return await transporter.sendMail(mailOptions);
+    // Send the email
+    console.log(`[${functionName}] Sending user confirmation email - Request ID: ${requestId}`);
+    console.log(`[${functionName}] Mail options:`, {
+      from: mailOptions.from,
+      to: mailOptions.to,
+      subject: mailOptions.subject,
+      hasHtml: !!mailOptions.html,
+      hasText: !!mailOptions.text
+    });
+    
+    const result = await transporter.sendMail(mailOptions);
+    
+    console.log(`[${functionName}] User confirmation sent successfully - Request ID: ${requestId}`);
+    console.log(`[${functionName}] Send result:`, {
+      messageId: result.messageId,
+      accepted: result.accepted,
+      rejected: result.rejected,
+      pending: result.pending,
+      response: result.response
+    });
+    
+    return { success: true, result };
+    
+  } catch (error) {
+    const emailError = logError(functionName, 'sending user confirmation', error, {
+      requestId,
+      recipientEmail: data.email,
+      senderData: data
+    });
+    
+    return { success: false, error: emailError };
+  }
 }
