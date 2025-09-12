@@ -133,7 +133,7 @@ export default function LandingPage() {
                 <img
                   src="/screenshot-dashboard.png"
                   alt="Dashboard AI Analytics"
-                  className="w-full rounded-lg mb-6"
+                  className="w-full rounded-lg mb-6 scale-110 sm:scale-100 transition-transform duration-300"
                 />
                 <div className="bg-purple-50 rounded-lg p-4 text-center">
                   <p className="font-heading text-purple-700 font-semibold">

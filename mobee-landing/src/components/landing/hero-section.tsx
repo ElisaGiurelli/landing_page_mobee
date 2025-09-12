@@ -75,7 +75,7 @@ export default function HeroSection({ openDemoModal }: HeroSectionProps) {
                 <img
                   src="/dashboard-screenshot.png"
                   alt="Dashboard AI Analytics"
-                  className="w-full rounded-lg mb-6"
+                  className="w-full rounded-lg mb-6 scale-110 sm:scale-100 transition-transform duration-300"
                 />
               </div>
 
