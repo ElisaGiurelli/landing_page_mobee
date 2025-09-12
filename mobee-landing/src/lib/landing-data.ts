@@ -121,14 +121,14 @@ export const navigationLinks = [
 ];
 
 export const footerLinks = {
-  quickLinks: ["Home", "Funzionalità", "Vantaggi", "Pricing", "Blog"],
+  quickLinks: ["Home", "Funzionalità", "Vantaggi"],
   resources: ["Documentazione", "Case Study", "FAQ", "Assistenza", "Webinar"],
 };
 
 export const contactInfo = {
   email: "mobee.mirai@gmail.com",
   phone: "+39 338 1903839",
-  location: "Milano, Italia",
+  location: "Roma, Italia",
 };
 
 export const problemStats = [

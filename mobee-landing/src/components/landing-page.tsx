@@ -362,25 +362,6 @@ export default function LandingPage() {
                   <span className="font-body">{contactInfo.location}</span>
                 </div>
               </div>
-
-              <div className="mt-6">
-                <h5 className="font-body font-semibold mb-3">Newsletter</h5>
-                <div className="flex gap-2">
-                  <Input
-                    type="email"
-                    placeholder="Ricevi aggiornamenti"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="bg-gray-800 border-gray-700 text-white"
-                  />
-                  <Button
-                    size="sm"
-                    className="bg-purple-500 hover:bg-purple-700"
-                  >
-                    <ArrowRight className="w-4 h-4" />
-                  </Button>
-                </div>
-              </div>
             </div>
           </div>
 
@@ -388,7 +369,6 @@ export default function LandingPage() {
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <p className="font-body text-gray-400">
                 © 2025 Moobe. Tutti i diritti riservati.
-                <span className="ml-4 text-xs opacity-70">v0.1.0-test</span>
               </p>
               <div className="flex gap-6 text-gray-400">
                 <a

@@ -168,7 +168,7 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogOverlay className="bg-black/20 backdrop-blur-sm" />
       <DialogContent
-        className="max-w-2xl mx-auto p-0 border-0 bg-transparent overflow-visible"
+        className="max-w-2xl mx-auto p-0 border-0 bg-transparent max-h-[95vh] sm:max-h-[90vh] w-[95vw] sm:w-auto overflow-y-auto sm:overflow-visible"
         showCloseButton={false}
       >
         <motion.div
@@ -176,7 +176,7 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.9, y: 20 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
-          className="relative bg-white rounded-3xl shadow-2xl overflow-hidden"
+          className="relative bg-white rounded-3xl shadow-2xl overflow-hidden max-h-full flex flex-col"
         >
           {/* Decorative Hexagons */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -207,13 +207,13 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
           <button
             onClick={handleClose}
             disabled={isLoading}
-            className="absolute top-6 right-6 z-10 p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors duration-200 disabled:opacity-50"
+            className="absolute top-4 right-4 sm:top-6 sm:right-6 z-20 p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors duration-200 disabled:opacity-50 shadow-sm"
           >
-            <X className="w-5 h-5 text-gray-600" />
+            <X className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
           </button>
 
           {/* Header */}
-          <div className="relative bg-gradient-to-br from-gray-50 to-purple-50/30 px-8 py-10 border-b border-gray-100">
+          <div className="relative bg-gradient-to-br from-gray-50 to-purple-50/30 px-4 sm:px-8 py-6 sm:py-10 border-b border-gray-100 shrink-0">
             <div className="flex items-start gap-4">
               <div className="relative">
                 <div className="bg-yellow-400 rounded-2xl p-3">
@@ -228,10 +228,10 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
                 </motion.div>
               </div>
               <div className="flex-1">
-                <DialogTitle className="text-3xl font-bold text-gray-900 mb-2">
+                <DialogTitle className="text-xl sm:text-3xl font-bold text-gray-900 mb-2">
                   Prenota la tua Demo Personalizzata
                 </DialogTitle>
-                <DialogDescription className="text-gray-600 text-lg">
+                <DialogDescription className="text-gray-600 text-sm sm:text-lg">
                   Compila il form e ti contatteremo entro 24 ore per organizzare
                   una demo su misura per la tua azienda
                 </DialogDescription>
@@ -240,8 +240,9 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="relative z-10 p-8">
-            <div className="grid md:grid-cols-2 gap-6">
+          <div className="flex-1 overflow-y-auto">
+            <form onSubmit={handleSubmit} className="relative z-10 p-4 sm:p-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
               {/* Nome */}
               <div className="space-y-2">
                 <label
@@ -391,11 +392,11 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
             </div>
 
             {/* Submit Button */}
-            <div className="mt-8">
+            <div className="mt-6 sm:mt-8">
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white rounded-2xl h-14 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50"
+                className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white rounded-2xl h-12 sm:h-14 text-base sm:text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50"
               >
                 {isLoading ? (
                   <>
@@ -412,11 +413,12 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
             </div>
 
             {/* Privacy Notice */}
-            <p className="text-center text-sm text-gray-500 mt-6 leading-relaxed">
+            <p className="text-center text-xs sm:text-sm text-gray-500 mt-4 sm:mt-6 leading-relaxed">
               Cliccando su &quot;Invia Richiesta Demo&quot; accetti di essere contattato
               dal team Moobe per organizzare la tua demo personalizzata
             </p>
-          </form>
+            </form>
+          </div>
 
           {/* Bottom Decoration */}
           <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-yellow-400 via-purple-500 to-yellow-400"></div>
