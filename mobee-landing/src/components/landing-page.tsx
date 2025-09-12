@@ -340,7 +340,7 @@ export default function LandingPage() {
               <h4 className="footer-heading">Contatti</h4>
               <div className="space-y-3">
                 <a 
-                  href={`mailto:${contactInfo.email}`}
+                  href={`mailto:${contactInfo.email}?subject=🐝 Richiesta informazioni Moobe`}
                   className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors"
                 >
                   <Mail className="w-5 h-5" />

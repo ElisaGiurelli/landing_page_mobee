@@ -600,7 +600,7 @@ export async function sendUserConfirmation(
     <html>
     <head>
       <meta charset="utf-8">
-      <title>Conferma Richiesta Demo - Moobe</title>
+      <title>🐝 Conferma Richiesta Demo - Moobe</title>
     </head>
     <body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
       <div style="background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%); color: white; padding: 30px; border-radius: 10px 10px 0 0; text-align: center;">
@@ -698,7 +698,7 @@ export async function sendUserConfirmation(
     const mailOptions = {
       from: `"Moobe Team" <${process.env.SMTP_USER}>`,
       to: data.email,
-      subject: "Conferma Richiesta Demo - Moobe AI Talent Management",
+      subject: "🐝 Conferma Richiesta Demo -  Moobe AI Talent Management",
       html: htmlContent,
       text: `Ciao ${data.nome},
 
