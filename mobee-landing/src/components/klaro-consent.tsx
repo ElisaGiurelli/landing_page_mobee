@@ -40,20 +40,36 @@ export default function KlaroConsent() {
         
         if (!consent) {
           console.log('🎯 No consent found, should show banner...');
-          // Try to show the banner after a short delay
+          // Try to show the banner after a short delay - MULTIPLE ATTEMPTS
           setTimeout(() => {
+            console.log('📱 Forcing banner to show - attempt 1...');
             if (klaroModule.show) {
-              console.log('📱 Forcing banner to show...');
               klaroModule.show();
             }
-          }, 1000);
+          }, 500);
+          
+          setTimeout(() => {
+            console.log('📱 Forcing banner to show - attempt 2...');
+            if (klaroModule.show) {
+              klaroModule.show();
+            }
+          }, 2000);
+        } else {
+          // Even if consent exists, show banner for testing purposes
+          console.log('🔍 Consent exists, but forcing banner for visibility...');
+          setTimeout(() => {
+            if (klaroModule.show) {
+              console.log('📱 Forcing banner to show anyway...');
+              klaroModule.show();
+            }
+          }, 1500);
         }
         
         // Start cookie scanner for compliance monitoring in development
         if (process.env.NODE_ENV === 'development') {
           try {
-            const module = await import('@/lib/cookie-scanner');
-            const cookieScanner = module.cookieScanner;
+            const scannerModule = await import('@/lib/cookie-scanner');
+            const cookieScanner = scannerModule.cookieScanner as any;
             if (cookieScanner && typeof cookieScanner.startScanning === 'function') {
               cookieScanner.startScanning();
             }
@@ -65,7 +81,7 @@ export default function KlaroConsent() {
         console.log('✅ Klaro initialized successfully', klaroModule);
       } catch (error) {
         console.error('❌ Error initializing Klaro:', error);
-        console.error('Stack trace:', error.stack);
+        console.error('Stack trace:', error instanceof Error ? error.stack : 'Unknown error');
       }
     };
 
@@ -88,7 +104,7 @@ export default function KlaroConsent() {
 
   // Make debug function available globally in development
   if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
-    window.resetCookieConsent = resetCookieConsent;
+    (window as any).resetCookieConsent = resetCookieConsent;
   }
 
   return (

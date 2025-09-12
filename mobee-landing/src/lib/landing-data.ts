@@ -121,7 +121,14 @@ export const navigationLinks = [
 ];
 
 export const footerLinks = {
-  quickLinks: ["Home", "Funzionalità", "Vantaggi"],
+  quickLinks: [
+    { label: "Home", href: "#home" },
+    { label: "Funzionalità", href: "#funzionalita" },
+    { label: "Vantaggi", href: "#vantaggi" },
+    { label: "Privacy Policy", href: "/privacy-policy" },
+    { label: "Termini di Servizio", href: "/termini-servizio" },
+    { label: "Cookie Policy", href: "/cookie-policy" }
+  ],
 };
 
 export const contactInfo = {

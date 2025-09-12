@@ -221,8 +221,8 @@ export const klaroConfig = {
   // Default consent state
   default: false,
 
-  // Must consent to use the site
-  mustConsent: false,
+  // Must consent to use the site (required for GDPR)
+  mustConsent: true,
 
   // Accept all by default in some regions (set to false for GDPR)
   acceptAll: false,
@@ -233,7 +233,7 @@ export const klaroConfig = {
   // Hide learn more link
   hideLearnMore: false,
 
-  // Notice as modal
+  // Notice as modal - set to true to ensure visibility
   noticeAsModal: false,
 
   // Storage method

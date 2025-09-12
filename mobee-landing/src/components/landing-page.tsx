@@ -326,8 +326,8 @@ export default function LandingPage() {
               <h4 className="footer-heading">Link rapidi</h4>
               <div className="space-y-2">
                 {footerLinks.quickLinks.map((link) => (
-                  <a key={link} href="#" className="footer-link">
-                    {link}
+                  <a key={link.label} href={link.href} className="footer-link">
+                    {link.label}
                   </a>
                 ))}
               </div>
@@ -350,7 +350,18 @@ export default function LandingPage() {
                 </div>
                 <div className="flex items-center gap-3 text-gray-400">
                   <MapPin className="w-5 h-5" />
-                  <span className="font-body">{contactInfo.location}</span>
+                  <div className="font-body">
+                    <div>Roma • Napoli</div>
+                    <div className="text-sm text-gray-500 mt-1">
+                      Sede legale: Via M. Cervantes de Saavedra 55/27, 80133 Napoli (NA)
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 text-gray-400">
+                  <Mail className="w-5 h-5" />
+                  <div className="font-body">
+                    <div className="text-sm">PEC: miraisrl@mypec.eu</div>
+                  </div>
                 </div>
                 
                 <div className="mt-6">
@@ -371,10 +382,24 @@ export default function LandingPage() {
           </div>
 
           <div className="border-t border-gray-800 mt-12 pt-8">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-              <p className="font-body text-gray-400">
-                © 2025 Moobe. Tutti i diritti riservati.
-              </p>
+            <div className="flex flex-col md:flex-row justify-between items-start gap-6">
+              <div className="font-body text-gray-400 text-sm">
+                <p className="mb-2">© 2025 Moobe by MIRAI S.r.l. Tutti i diritti riservati.</p>
+                <div className="space-y-1 text-xs text-gray-500">
+                  <div>P.IVA e C.F.: 10605181212</div>
+                  <div>REA Napoli: NA-1118350</div>
+                  <div>
+                    <a 
+                      href="https://www.mir-ai.eu" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="hover:text-gray-400 transition-colors"
+                    >
+                      www.mir-ai.eu
+                    </a>
+                  </div>
+                </div>
+              </div>
               <div className="flex gap-6 text-gray-400">
                 <a
                   href="/privacy-policy"
