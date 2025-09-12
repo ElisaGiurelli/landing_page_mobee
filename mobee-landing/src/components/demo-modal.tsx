@@ -37,6 +37,7 @@ interface FormData {
   azienda: string;
   ruolo: string;
   telefono: string;
+  privacyAccepted: boolean;
 }
 
 export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
@@ -47,23 +48,26 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
     azienda: "",
     ruolo: "",
     telefono: "",
+    privacyAccepted: false,
   });
 
   const [isLoading, setIsLoading] = useState(false);
-  const [errors, setErrors] = useState<Partial<FormData>>({});
+  const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const { name, value, type, checked } = e.target;
+    const fieldValue = type === 'checkbox' ? checked : value;
+    
+    setFormData((prev) => ({ ...prev, [name]: fieldValue }));
 
-    // Clear error when user starts typing
+    // Clear error when user starts typing or changes checkbox
     if (errors[name as keyof FormData]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
     }
   };
 
   const validateForm = (): boolean => {
-    const newErrors: Partial<FormData> = {};
+    const newErrors: Partial<Record<keyof FormData, string>> = {};
 
     if (!formData.nome.trim()) {
       newErrors.nome = "Il nome è obbligatorio";
@@ -85,6 +89,10 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
 
     if (!formData.ruolo.trim()) {
       newErrors.ruolo = "Il ruolo è obbligatorio";
+    }
+
+    if (!formData.privacyAccepted) {
+      newErrors.privacyAccepted = "È necessario accettare la Privacy Policy";
     }
 
     setErrors(newErrors);
@@ -128,6 +136,7 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
           azienda: "",
           ruolo: "",
           telefono: "",
+          privacyAccepted: false,
         });
 
         // Close modal after 2 seconds
@@ -159,6 +168,7 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
         azienda: "",
         ruolo: "",
         telefono: "",
+        privacyAccepted: false,
       });
       setErrors({});
     }
@@ -391,6 +401,41 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
               </div>
             </div>
 
+            {/* GDPR Checkbox */}
+            <div className="mt-6 space-y-2">
+              <div className="flex items-start gap-3">
+                <input
+                  id="privacyAccepted"
+                  name="privacyAccepted"
+                  type="checkbox"
+                  checked={formData.privacyAccepted}
+                  onChange={handleInputChange}
+                  disabled={isLoading}
+                  className={`mt-1 w-4 h-4 text-purple-600 border-2 rounded focus:ring-purple-500 focus:ring-2 ${
+                    errors.privacyAccepted ? "border-red-500" : "border-gray-300"
+                  }`}
+                />
+                <label
+                  htmlFor="privacyAccepted"
+                  className="text-sm text-gray-700 leading-relaxed"
+                >
+                  Ho letto e accetto la{" "}
+                  <a
+                    href="/privacy-policy"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-purple-600 hover:underline font-medium"
+                  >
+                    Privacy Policy
+                  </a>{" "}
+                  e acconsento al trattamento dei miei dati personali per essere contattato dal team Moobe. *
+                </label>
+              </div>
+              {errors.privacyAccepted && (
+                <p className="text-sm text-red-500 ml-7">{errors.privacyAccepted}</p>
+              )}
+            </div>
+
             {/* Submit Button */}
             <div className="mt-6 sm:mt-8">
               <Button
@@ -413,9 +458,8 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
             </div>
 
             {/* Privacy Notice */}
-            <p className="text-center text-xs sm:text-sm text-gray-500 mt-4 sm:mt-6 leading-relaxed">
-              Cliccando su &quot;Invia Richiesta Demo&quot; accetti di essere contattato
-              dal team Moobe per organizzare la tua demo personalizzata
+            <p className="text-center text-xs text-gray-500 mt-4 leading-relaxed">
+              I tuoi dati saranno trattati secondo la nostra Privacy Policy e utilizzati esclusivamente per organizzare la demo richiesta
             </p>
             </form>
           </div>

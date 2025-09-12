@@ -3,15 +3,14 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import DemoModal from "@/components/demo-modal";
+import KlaroConsent from "@/components/klaro-consent";
 import { Toaster } from "react-hot-toast";
 import {
   Mail,
   Phone,
   MapPin,
   Calendar,
-  ArrowRight,
   Sparkles,
   Linkedin,
 } from "lucide-react";
@@ -44,7 +43,6 @@ import {
 } from "@/lib/landing-data";
 
 export default function LandingPage() {
-  const [email, setEmail] = useState("");
   const [isDemoModalOpen, setIsDemoModalOpen] = useState(false);
 
   const openDemoModal = () => setIsDemoModalOpen(true);
@@ -379,23 +377,45 @@ export default function LandingPage() {
               </p>
               <div className="flex gap-6 text-gray-400">
                 <a
-                  href="#"
+                  href="/privacy-policy"
                   className="font-body hover:text-white transition-colors"
                 >
                   Privacy Policy
                 </a>
                 <a
-                  href="#"
+                  href="/termini-servizio"
                   className="font-body hover:text-white transition-colors"
                 >
                   Termini di Servizio
                 </a>
                 <a
-                  href="#"
+                  href="/cookie-policy"
                   className="font-body hover:text-white transition-colors"
                 >
                   Cookie Policy
                 </a>
+                <button
+                  onClick={() => {
+                    if (typeof window !== 'undefined' && window.klaro) {
+                      try {
+                        // Klaro espone la funzione show() direttamente
+                        if (typeof window.klaro.show === 'function') {
+                          window.klaro.show();
+                        } else {
+                          console.warn('Klaro show function not available');
+                          console.log('Available Klaro methods:', Object.keys(window.klaro));
+                        }
+                      } catch (error) {
+                        console.error('Error showing cookie manager:', error);
+                      }
+                    } else {
+                      console.warn('Klaro not loaded yet. Please wait a moment and try again.');
+                    }
+                  }}
+                  className="font-body hover:text-white transition-colors text-gray-400 text-sm"
+                >
+                  Gestisci Cookie
+                </button>
               </div>
             </div>
           </div>
@@ -403,6 +423,7 @@ export default function LandingPage() {
       </footer>
 
       <DemoModal isOpen={isDemoModalOpen} onClose={closeDemoModal} />
+      <KlaroConsent />
       <Toaster />
     </div>
   );

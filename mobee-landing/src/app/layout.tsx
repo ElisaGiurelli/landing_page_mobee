@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Manrope, IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
+import Analytics from '@/components/analytics';
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -72,6 +73,7 @@ export default function RootLayout({
       <body
         className={`${manrope.variable} ${ibmPlexSans.variable} font-body antialiased`}
       >
+        <Analytics />
         {children}
       </body>
     </html>
