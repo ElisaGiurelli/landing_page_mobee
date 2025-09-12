@@ -12,20 +12,20 @@ export const klaroConfig = {
   translations: {
     it: {
       consentModal: {
-        title: '🍪 Utilizziamo i cookie',
-        description: 'Utilizziamo cookie tecnici e di analisi per migliorare la tua esperienza di navigazione e per analizzare l\'utilizzo del nostro sito web. I cookie di marketing ci aiutano a mostrarti contenuti più pertinenti.',
+        title: 'Cookie',
+        description: 'Utilizziamo cookie per migliorare la tua esperienza e analizzare l\'utilizzo del sito.',
         privacyPolicy: {
           name: 'Privacy Policy',
-          text: 'Leggi la nostra {privacyPolicy} per maggiori informazioni sul trattamento dei dati.',
+          text: 'Leggi la {privacyPolicy} per maggiori informazioni.',
         },
       },
       consentNotice: {
-        changeDescription: 'Sono state apportate modifiche dall\'ultima visita, aggiorna le tue preferenze.',
-        description: 'Utilizziamo cookie e tecnologie simili per personalizzare contenuti e annunci, fornire funzionalità social e analizzare il traffico. Condividiamo anche informazioni sull\'utilizzo del nostro sito con i nostri partner per social media, pubblicità e analisi che potrebbero combinarle con altre informazioni.',
+        changeDescription: 'Aggiorna le tue preferenze cookie.',
+        description: 'Utilizziamo cookie per personalizzare contenuti e migliorare la tua esperienza.',
         learnMore: 'Personalizza',
-        testing: 'Modalità test!',
+        testing: 'Test!',
         imprint: 'Impronta',
-        privacyPolicy: 'Privacy Policy',
+        privacyPolicy: 'Privacy',
         privacyPolicyUrl: '/privacy-policy'
       },
       ok: 'Accetta tutti',
@@ -222,7 +222,7 @@ export const klaroConfig = {
   default: false,
 
   // Must consent to use the site (required for GDPR)
-  mustConsent: true,
+  mustConsent: false,
 
   // Accept all by default in some regions (set to false for GDPR)
   acceptAll: false,
@@ -233,7 +233,7 @@ export const klaroConfig = {
   // Hide learn more link
   hideLearnMore: false,
 
-  // Notice as modal - set to true to ensure visibility
+  // Notice as modal - keep as banner, not modal
   noticeAsModal: false,
 
   // Storage method

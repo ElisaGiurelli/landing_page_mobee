@@ -136,64 +136,67 @@ export default function KlaroConsent() {
       
       {/* Custom CSS for MOBEE branding - Beautiful cookie modal */}
       <style jsx global>{`
-        /* Cookie Notice Banner - Bottom positioned with modern design */
+        /* Cookie Notice Banner - Small, discrete bottom-right banner */
         .moobe-cookie-consent .klaro .cookie-notice {
           background: linear-gradient(135deg, #ffffff 0%, #faf5ff 100%) !important;
           border: none !important;
-          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(124, 58, 237, 0.1) !important;
-          border-radius: 24px !important;
-          margin: 16px !important;
-          backdrop-filter: blur(20px) !important;
-          max-width: 500px !important;
+          box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(124, 58, 237, 0.1) !important;
+          border-radius: 16px !important;
+          margin: 12px !important;
+          backdrop-filter: blur(10px) !important;
+          max-width: 350px !important;
+          width: 350px !important;
           position: fixed !important;
           bottom: 20px !important;
           right: 20px !important;
           z-index: 9999 !important;
+          font-size: 14px !important;
         }
 
         /* Cookie notice content styling */
         .moobe-cookie-consent .klaro .cookie-notice .cn-body {
           color: #374151 !important;
           font-family: 'Inter', 'Segoe UI', system-ui, sans-serif !important;
-          line-height: 1.6 !important;
-          padding: 24px !important;
+          line-height: 1.5 !important;
+          padding: 16px !important;
         }
 
         .moobe-cookie-consent .klaro .cookie-notice .cn-body h1 {
-          font-size: 20px !important;
-          font-weight: 700 !important;
+          font-size: 16px !important;
+          font-weight: 600 !important;
           color: #111827 !important;
-          margin-bottom: 12px !important;
+          margin-bottom: 8px !important;
           display: flex !important;
           align-items: center !important;
-          gap: 8px !important;
+          gap: 6px !important;
         }
 
         .moobe-cookie-consent .klaro .cookie-notice .cn-body h1::before {
           content: '🍪' !important;
-          font-size: 24px !important;
+          font-size: 18px !important;
         }
 
         .moobe-cookie-consent .klaro .cookie-notice .cn-body p {
-          font-size: 14px !important;
-          margin-bottom: 20px !important;
+          font-size: 13px !important;
+          margin-bottom: 12px !important;
           color: #6b7280 !important;
+          line-height: 1.4 !important;
         }
 
-        /* Button styling - MOBEE brand colors */
+        /* Button styling - MOBEE brand colors - Smaller buttons */
         .moobe-cookie-consent .klaro .cookie-notice .cn-buttons {
           display: flex !important;
-          gap: 12px !important;
+          gap: 8px !important;
           flex-wrap: wrap !important;
           justify-content: flex-end !important;
         }
 
         .moobe-cookie-consent .klaro .button {
-          border-radius: 12px !important;
-          font-weight: 600 !important;
-          padding: 12px 20px !important;
-          font-size: 14px !important;
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+          border-radius: 8px !important;
+          font-weight: 500 !important;
+          padding: 8px 12px !important;
+          font-size: 12px !important;
+          transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
           border: none !important;
           cursor: pointer !important;
           font-family: inherit !important;
@@ -391,23 +394,39 @@ export default function KlaroConsent() {
           text-decoration: underline !important;
         }
 
-        /* Mobile responsive improvements */
+        /* Mobile responsive improvements - Keep it small */
         @media (max-width: 768px) {
           .moobe-cookie-consent .klaro .cookie-notice {
-            left: 16px !important;
-            right: 16px !important;
-            bottom: 16px !important;
+            left: 12px !important;
+            right: 12px !important;
+            bottom: 12px !important;
             max-width: none !important;
-            border-radius: 16px !important;
+            width: auto !important;
+            border-radius: 12px !important;
+            font-size: 12px !important;
           }
 
           .moobe-cookie-consent .klaro .cookie-notice .cn-body {
-            padding: 20px !important;
+            padding: 12px !important;
+          }
+
+          .moobe-cookie-consent .klaro .cookie-notice .cn-body h1 {
+            font-size: 14px !important;
+            margin-bottom: 6px !important;
+          }
+
+          .moobe-cookie-consent .klaro .cookie-notice .cn-body p {
+            font-size: 11px !important;
+            margin-bottom: 8px !important;
           }
 
           .moobe-cookie-consent .klaro .cookie-notice .cn-buttons {
-            flex-direction: column !important;
-            gap: 8px !important;
+            gap: 6px !important;
+          }
+
+          .moobe-cookie-consent .klaro .button {
+            padding: 6px 10px !important;
+            font-size: 11px !important;
           }
 
           .moobe-cookie-consent .klaro .cookie-modal {
