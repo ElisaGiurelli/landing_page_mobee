@@ -1,4 +1,11 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mobee.it/sitemap.xml
+# Disallow admin areas if any
+Disallow: /admin/
+Disallow: /api/
+
+# Allow all search engines
+Crawl-delay: 1
+
+Sitemap: https://moobee.it/sitemap.xml

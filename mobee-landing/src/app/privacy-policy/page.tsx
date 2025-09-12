@@ -4,8 +4,13 @@ import { ArrowLeft } from 'lucide-react';
 import MoobeLogo from '@/components/ui/mobee-logo';
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy - Moobee',
-  description: 'Informativa sulla privacy di Moobee - Come trattiamo i tuoi dati personali',
+  title: 'Privacy Policy - MOOBEE | Informativa Privacy',
+  description: 'Informativa sulla privacy di MOOBEE - Come trattiamo i tuoi dati personali nella piattaforma AI per talent management.',
+  openGraph: {
+    title: 'Privacy Policy - MOOBEE',
+    description: 'Informativa sulla privacy di MOOBEE - Come trattiamo i tuoi dati personali',
+    url: 'https://moobee.it/privacy-policy',
+  }
 };
 
 export default function PrivacyPolicyPage() {

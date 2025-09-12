@@ -4,9 +4,14 @@ import { ArrowLeft } from "lucide-react";
 import MoobeLogo from "@/components/ui/mobee-logo";
 
 export const metadata: Metadata = {
-  title: "Termini di Servizio - Moobee",
+  title: "Termini di Servizio - MOOBEE | Condizioni d'uso",
   description:
-    "Termini e condizioni di utilizzo della piattaforma Moobee AI Talent Management",
+    "Termini e condizioni di utilizzo della piattaforma MOOBEE AI Talent Management. Scopri i tuoi diritti e doveri nell'uso della nostra piattaforma.",
+  openGraph: {
+    title: "Termini di Servizio - MOOBEE",
+    description: "Termini e condizioni di utilizzo della piattaforma MOOBEE AI Talent Management",
+    url: "https://moobee.it/termini-servizio",
+  }
 };
 
 export default function TerminiServizioPage() {

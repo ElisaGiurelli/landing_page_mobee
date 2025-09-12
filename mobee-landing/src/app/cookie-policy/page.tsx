@@ -4,8 +4,13 @@ import { ArrowLeft } from 'lucide-react';
 import MoobeeLogo from '@/components/ui/mobee-logo';
 
 export const metadata: Metadata = {
-  title: 'Cookie Policy - Moobee',
-  description: 'Informazioni sui cookie utilizzati dal sito Moobee',
+  title: 'Cookie Policy - MOOBEE | Gestione Cookie',
+  description: 'Informazioni sui cookie utilizzati dal sito MOOBEE per migliorare la tua esperienza nella piattaforma AI talent management.',
+  openGraph: {
+    title: 'Cookie Policy - MOOBEE',
+    description: 'Informazioni sui cookie utilizzati dal sito MOOBEE',
+    url: 'https://moobee.it/cookie-policy',
+  }
 };
 
 const cookieData = [
