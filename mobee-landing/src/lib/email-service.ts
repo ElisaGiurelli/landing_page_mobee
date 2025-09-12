@@ -392,12 +392,12 @@ export async function sendAdminNotification(
     <html>
     <head>
       <meta charset="utf-8">
-      <title>Nuova Richiesta Demo - Moobe</title>
+      <title>Nuova Richiesta Demo - Moobee</title>
     </head>
     <body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
       <div style="background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%); color: white; padding: 30px; border-radius: 10px 10px 0 0; text-align: center;">
         <h1 style="margin: 0; font-size: 28px; font-weight: bold;">🎯 Nuova Richiesta Demo</h1>
-        <p style="margin: 10px 0 0 0; font-size: 16px; opacity: 0.9;">Moobe - AI Talent Management</p>
+        <p style="margin: 10px 0 0 0; font-size: 16px; opacity: 0.9;">Moobee - AI Talent Management</p>
       </div>
       
       <div style="background: #f8fafc; padding: 30px; border-radius: 0 0 10px 10px; border: 1px solid #e2e8f0;">
@@ -468,7 +468,7 @@ export async function sendAdminNotification(
       `[${functionName}] Preparing mail options - Request ID: ${requestId}`
     );
     const mailOptions = {
-      from: `"Moobe Platform" <${process.env.SMTP_USER}>`,
+      from: `"Moobee Platform" <${process.env.SMTP_USER}>`,
       to: process.env.ADMIN_EMAIL,
       subject: `🎯 Nuova Richiesta Demo - ${data.nome} ${data.cognome}`,
       html: htmlContent,
@@ -600,7 +600,7 @@ export async function sendUserConfirmation(
     <html>
     <head>
       <meta charset="utf-8">
-      <title>🐝 Conferma Richiesta Demo - Moobe</title>
+      <title>🐝 Conferma Richiesta Demo - Moobee</title>
     </head>
     <body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
       <div style="background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%); color: white; padding: 30px; border-radius: 10px 10px 0 0; text-align: center;">
@@ -641,7 +641,7 @@ export async function sendUserConfirmation(
           <h2 style="color: #7c3aed; margin-top: 0; margin-bottom: 20px; font-size: 24px;">✅ Richiesta Confermata</h2>
           
           <p style="font-size: 16px; margin-bottom: 20px; color: #2d3748;">
-            <strong>Grazie per il tuo interesse in Moobe!</strong>
+            <strong>Grazie per il tuo interesse in Moobee!</strong>
           </p>
           
           <p style="font-size: 16px; margin-bottom: 20px; color: #2d3748;">
@@ -667,7 +667,7 @@ export async function sendUserConfirmation(
         
         <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; border-radius: 4px; margin-bottom: 25px;">
           <p style="margin: 0; color: #92400e; font-weight: 500;">
-            💡 <strong>Suggerimento:</strong> Durante la demo potrai vedere come Moobe può migliorare l'engagement e la retention nella tua azienda.
+            💡 <strong>Suggerimento:</strong> Durante la demo potrai vedere come Moobee può migliorare l'engagement e la retention nella tua azienda.
           </p>
         </div>
         
@@ -683,7 +683,7 @@ export async function sendUserConfirmation(
         
         <div style="text-align: center; margin-top: 20px;">
           <p style="color: #9ca3af; font-size: 12px; margin: 0;">
-            © 2025 Moobe - AI Talent Management Platform<br>
+            © 2025 Moobee - AI Talent Management Platform<br>
             Questa email è stata inviata automaticamente.
           </p>
         </div>
@@ -696,13 +696,13 @@ export async function sendUserConfirmation(
       `[${functionName}] Preparing mail options - Request ID: ${requestId}`
     );
     const mailOptions = {
-      from: `"Moobe Team" <${process.env.SMTP_USER}>`,
+      from: `"Moobee Team" <${process.env.SMTP_USER}>`,
       to: data.email,
-      subject: "🐝 Conferma Richiesta Demo -  Moobe AI Talent Management",
+      subject: "🐝 Conferma Richiesta Demo -  Moobee AI Talent Management",
       html: htmlContent,
       text: `Ciao ${data.nome},
 
-Grazie per il tuo interesse in Moobe!
+Grazie per il tuo interesse in Moobee!
 
 Abbiamo ricevuto la tua richiesta di demo per la nostra piattaforma AI di Talent Management.
 
@@ -716,10 +716,10 @@ Hai domande? Contattaci:
 - Telefono: +39 338 1903839
 
 A presto!
-Team Moobe
+Team Moobee
 
 ---
-© 2025 Moobe - AI Talent Management Platform`,
+© 2025 Moobee - AI Talent Management Platform`,
     };
 
     // Send the email

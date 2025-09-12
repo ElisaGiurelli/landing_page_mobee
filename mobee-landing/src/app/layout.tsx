@@ -17,7 +17,7 @@ const ibmPlexSans = IBM_Plex_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Moobe - AI Talent Management Platform",
+  title: "Moobee - AI Talent Management Platform",
   description:
     "Prima piattaforma AI certificata in Italia per valorizzare i talenti aziendali",
   keywords: [
@@ -26,11 +26,11 @@ export const metadata: Metadata = {
     "Risorse Umane",
     "HR",
     "Italia",
-    "Moobe",
+    "Moobee",
   ],
-  authors: [{ name: "Moobe Team" }],
-  creator: "Moobe",
-  publisher: "Moobe",
+  authors: [{ name: "Moobee Team" }],
+  creator: "Moobee",
+  publisher: "Moobee",
   robots: {
     index: true,
     follow: true,
@@ -39,14 +39,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: "it_IT",
     url: "https://mobee.it",
-    title: "Moobe - AI Talent Management Platform",
+    title: "Moobee - AI Talent Management Platform",
     description:
       "Prima piattaforma AI certificata in Italia per valorizzare i talenti aziendali",
-    siteName: "Moobe",
+    siteName: "Moobee",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Moobe - AI Talent Management Platform",
+    title: "Moobee - AI Talent Management Platform",
     description:
       "Prima piattaforma AI certificata in Italia per valorizzare i talenti aziendali",
   },

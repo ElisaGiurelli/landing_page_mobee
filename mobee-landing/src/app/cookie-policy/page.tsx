@@ -1,11 +1,11 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
-import MoobeLogo from '@/components/ui/mobee-logo';
+import MoobeeLogo from '@/components/ui/mobee-logo';
 
 export const metadata: Metadata = {
-  title: 'Cookie Policy - Moobe',
-  description: 'Informazioni sui cookie utilizzati dal sito Moobe',
+  title: 'Cookie Policy - Moobee',
+  description: 'Informazioni sui cookie utilizzati dal sito Moobee',
 };
 
 const cookieData = [
@@ -15,14 +15,14 @@ const cookieData = [
     cookies: [
       {
         name: 'cookie-consent',
-        provider: 'Moobe',
+        provider: 'Moobee',
         purpose: 'Memorizza le preferenze sui cookie',
         duration: 'Persistente',
         type: 'Essenziale'
       },
       {
         name: 'cookie-consent-date',
-        provider: 'Moobe', 
+        provider: 'Moobee', 
         purpose: 'Data del consenso ai cookie',
         duration: 'Persistente',
         type: 'Essenziale'
@@ -128,7 +128,7 @@ export default function CookiePolicyPage() {
         <div className="max-w-6xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-3">
-              <MoobeLogo className="text-purple-600" width={120} height={100} />
+              <MoobeeLogo className="text-purple-600" width={120} height={100} />
             </Link>
             <Link
               href="/"

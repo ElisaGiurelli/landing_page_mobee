@@ -92,7 +92,7 @@ export default function LandingPage() {
                 <span className="text-purple-500">talenti esistenti</span>
               </h2>
               <p className="font-body text-xl text-gray-600 mb-8">
-                Moobe è la prima piattaforma AI Assistant in Italia per Talent
+                Moobee è la prima piattaforma AI Assistant in Italia per Talent
                 Management che aumenta l&apos;engagement e semplifica la
                 pianificazione in base a skill, disponibilità e preferenze.
               </p>
@@ -121,7 +121,7 @@ export default function LandingPage() {
                   Risultati: Più engagement, più retention, meno caos operativo
                 </p>
                 <p className="font-body text-gray-600">
-                  La differenza? Non solo dashboard: Moobe AI propone la
+                  La differenza? Non solo dashboard: Moobee AI propone la
                   prossima azione chiara e prioritaria.
                 </p>
               </div>
@@ -153,7 +153,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-6">
           <motion.div {...fadeInUp} className="text-center mb-16">
             <h2 className="section-title text-gray-900 mb-6">
-              Le Funzionalità di Moobe
+              Le Funzionalità di Moobee
             </h2>
             <p className="font-body text-xl text-gray-600 max-w-3xl mx-auto">
               Le tre funzionalità chiave della nostra piattaforma AI per talent
@@ -195,7 +195,7 @@ export default function LandingPage() {
               conviene
             </h2>
             <p className="font-body text-xl text-gray-600 max-w-3xl mx-auto">
-              Scopri come Moobe trasforma la gestione dei talenti in un
+              Scopri come Moobee trasforma la gestione dei talenti in un
               vantaggio competitivo misurabile per la tua azienda
             </p>
           </motion.div>
@@ -243,7 +243,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-6">
           <motion.div {...fadeInUp} className="text-center mb-16">
             <h2 className="section-title text-gray-900 mb-6">
-              Per chi è Moobe?
+              Per chi è Moobee?
             </h2>
           </motion.div>
 
@@ -285,7 +285,7 @@ export default function LandingPage() {
               Pronto a valorizzare i talenti nella tua azienda?
             </h2>
             <p className="font-body text-xl text-gray-600 mb-10">
-              Richiedi una demo personalizzata e scopri come Moobe può
+              Richiedi una demo personalizzata e scopri come Moobee può
               trasformare il tuo team.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -337,8 +337,8 @@ export default function LandingPage() {
             <div>
               <h4 className="footer-heading">Contatti</h4>
               <div className="space-y-3">
-                <a 
-                  href={`mailto:${contactInfo.email}?subject=🐝 Richiesta informazioni Moobe`}
+                <a
+                  href={`mailto:${contactInfo.email}?subject=🐝 Richiesta informazioni Moobee`}
                   className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors"
                 >
                   <Mail className="w-5 h-5" />
@@ -353,7 +353,8 @@ export default function LandingPage() {
                   <div className="font-body">
                     <div>Roma • Napoli</div>
                     <div className="text-sm text-gray-500 mt-1">
-                      Sede legale: Via M. Cervantes de Saavedra 55/27, 80133 Napoli (NA)
+                      Sede legale: Via M. Cervantes de Saavedra 55/27, 80133
+                      Napoli (NA)
                     </div>
                   </div>
                 </div>
@@ -363,9 +364,11 @@ export default function LandingPage() {
                     <div className="text-sm">PEC: miraisrl@mypec.eu</div>
                   </div>
                 </div>
-                
+
                 <div className="mt-6">
-                  <h5 className="font-heading text-white text-sm font-semibold mb-3">Seguici</h5>
+                  <h5 className="font-heading text-white text-sm font-semibold mb-3">
+                    Seguici
+                  </h5>
                   <div className="flex gap-3">
                     <a
                       href="https://www.linkedin.com/company/moobeeai?trk=public_profile_experience-item_profile-section-card_image-click"
@@ -384,20 +387,12 @@ export default function LandingPage() {
           <div className="border-t border-gray-800 mt-12 pt-8">
             <div className="flex flex-col md:flex-row justify-between items-start gap-6">
               <div className="font-body text-gray-400 text-sm">
-                <p className="mb-2">© 2025 Moobe by MIRAI S.r.l. Tutti i diritti riservati.</p>
+                <p className="mb-2">
+                  © 2025 Moobee by MIRAI S.r.l. Tutti i diritti riservati.
+                </p>
                 <div className="space-y-1 text-xs text-gray-500">
                   <div>P.IVA e C.F.: 10605181212</div>
                   <div>REA Napoli: NA-1118350</div>
-                  <div>
-                    <a 
-                      href="https://www.mir-ai.eu" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="hover:text-gray-400 transition-colors"
-                    >
-                      www.mir-ai.eu
-                    </a>
-                  </div>
                 </div>
               </div>
               <div className="flex gap-6 text-gray-400">
@@ -421,20 +416,25 @@ export default function LandingPage() {
                 </a>
                 <button
                   onClick={() => {
-                    if (typeof window !== 'undefined' && window.klaro) {
+                    if (typeof window !== "undefined" && window.klaro) {
                       try {
                         // Klaro espone la funzione show() direttamente
-                        if (typeof window.klaro.show === 'function') {
+                        if (typeof window.klaro.show === "function") {
                           window.klaro.show();
                         } else {
-                          console.warn('Klaro show function not available');
-                          console.log('Available Klaro methods:', Object.keys(window.klaro));
+                          console.warn("Klaro show function not available");
+                          console.log(
+                            "Available Klaro methods:",
+                            Object.keys(window.klaro)
+                          );
                         }
                       } catch (error) {
-                        console.error('Error showing cookie manager:', error);
+                        console.error("Error showing cookie manager:", error);
                       }
                     } else {
-                      console.warn('Klaro not loaded yet. Please wait a moment and try again.');
+                      console.warn(
+                        "Klaro not loaded yet. Please wait a moment and try again."
+                      );
                     }
                   }}
                   className="font-body hover:text-white transition-colors text-gray-400 text-sm"

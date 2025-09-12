@@ -29,7 +29,7 @@ export default function HeroSection({ openDemoModal }: HeroSectionProps) {
             </h1>
 
             <p className="font-body text-xl text-gray-600 mb-8 leading-relaxed">
-              Moobe è la piattaforma che aiuta PMI e mid-market a eliminare il
+              Moobee è la piattaforma che aiuta PMI e mid-market a eliminare il
               caos organizzativo e far crescere il business partendo dalle
               persone che hanno già.
             </p>

@@ -230,11 +230,14 @@ export const klaroConfig = {
   // Hide decline all button (set to false for GDPR compliance)
   hideDeclineAll: false,
 
-  // Hide learn more link
-  hideLearnMore: false,
+  // Hide learn more link to prevent modal opening
+  hideLearnMore: true,
 
-  // Notice as modal - keep as banner, not modal
+  // Notice as modal - ALWAYS keep as banner, never show modal
   noticeAsModal: false,
+  
+  // Force banner mode (not modal) even on first visit
+  modalDisplayMode: 'notice',
 
   // Storage method
   storageMethod: 'localStorage',
@@ -249,10 +252,9 @@ export const klaroConfig = {
   privacyPolicy: '/privacy-policy',
 
   // Additional information
-  additionalClass: 'moobe-cookie-consent',
+  additionalClass: 'moobee-cookie-consent',
   
   // Testing mode
   testing: false
 };
-
 export default klaroConfig;

@@ -17,7 +17,7 @@ export default function MoobeLogo({
   return (
     <Image
       src="/logoMobeeV3.svg"
-      alt="Moobe Logo"
+      alt="Moobee Logo"
       width={width}
       height={height}
       className={className}

@@ -39,30 +39,11 @@ export default function KlaroConsent() {
         console.log('🍪 Existing consent:', consent);
         
         if (!consent) {
-          console.log('🎯 No consent found, should show banner...');
-          // Try to show the banner after a short delay - MULTIPLE ATTEMPTS
-          setTimeout(() => {
-            console.log('📱 Forcing banner to show - attempt 1...');
-            if (klaroModule.show) {
-              klaroModule.show();
-            }
-          }, 500);
-          
-          setTimeout(() => {
-            console.log('📱 Forcing banner to show - attempt 2...');
-            if (klaroModule.show) {
-              klaroModule.show();
-            }
-          }, 2000);
+          console.log('🎯 No consent found, banner should appear automatically...');
+          // Let Klaro handle showing the banner naturally - don't force it
+          // The banner will appear automatically based on configuration
         } else {
-          // Even if consent exists, show banner for testing purposes
-          console.log('🔍 Consent exists, but forcing banner for visibility...');
-          setTimeout(() => {
-            if (klaroModule.show) {
-              console.log('📱 Forcing banner to show anyway...');
-              klaroModule.show();
-            }
-          }, 1500);
+          console.log('🔍 Consent exists, banner hidden.');
         }
         
         // Start cookie scanner for compliance monitoring in development
@@ -382,14 +363,20 @@ export default function KlaroConsent() {
           min-width: 140px !important;
         }
 
-        /* Link styling */
-        .moobe-cookie-consent .klaro a {
+        /* Hide links to prevent modal opening - keep banner small */
+        .moobe-cookie-consent .klaro .cookie-notice a,
+        .moobe-cookie-consent .klaro .cookie-notice .cm-btn-learn-more {
+          display: none !important;
+        }
+        
+        /* Link styling for modal (if ever needed) */
+        .moobe-cookie-consent .klaro .cookie-modal a {
           color: #7c3aed !important;
           text-decoration: none !important;
           font-weight: 600 !important;
         }
 
-        .moobe-cookie-consent .klaro a:hover {
+        .moobe-cookie-consent .klaro .cookie-modal a:hover {
           color: #6d28d9 !important;
           text-decoration: underline !important;
         }

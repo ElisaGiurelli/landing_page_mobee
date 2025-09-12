@@ -4,8 +4,8 @@ import { ArrowLeft } from 'lucide-react';
 import MoobeLogo from '@/components/ui/mobee-logo';
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy - Moobe',
-  description: 'Informativa sulla privacy di Moobe - Come trattiamo i tuoi dati personali',
+  title: 'Privacy Policy - Moobee',
+  description: 'Informativa sulla privacy di Moobee - Come trattiamo i tuoi dati personali',
 };
 
 export default function PrivacyPolicyPage() {
@@ -38,7 +38,7 @@ export default function PrivacyPolicyPage() {
             <section>
               <h2 className="text-xl font-semibold text-gray-800 mb-4">1. Titolare del Trattamento</h2>
               <p className="text-gray-600 leading-relaxed">
-                Il Titolare del trattamento dei dati è <strong>Moobe</strong>, con sede in Roma, Italia.
+                Il Titolare del trattamento dei dati è <strong>Moobee</strong>, con sede in Roma, Italia.
               </p>
               <p className="text-gray-600 leading-relaxed">
                 <strong>Email:</strong> mobee.mirai@gmail.com<br />
