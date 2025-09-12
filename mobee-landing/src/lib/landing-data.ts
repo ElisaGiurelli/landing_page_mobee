@@ -122,7 +122,6 @@ export const navigationLinks = [
 
 export const footerLinks = {
   quickLinks: ["Home", "Funzionalità", "Vantaggi"],
-  resources: ["Documentazione", "Case Study", "FAQ", "Assistenza", "Webinar"],
 };
 
 export const contactInfo = {

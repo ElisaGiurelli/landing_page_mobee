@@ -13,6 +13,7 @@ import {
   Calendar,
   ArrowRight,
   Sparkles,
+  Linkedin,
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -215,22 +216,25 @@ export default function LandingPage() {
           >
             <div className="bg-white rounded-2xl p-8 border border-purple-100 shadow-sm">
               <h3 className="font-heading text-2xl font-bold text-gray-800 mb-4">
-                Monitora e valorizza ogni talento
+                Monitora e <span className="text-purple-600">valorizza</span>{" "}
+                ogni talento
               </h3>
               <p className="font-body text-gray-600 mb-6">
                 Dashboard intelligenti per HR manager che trasformano i dati in
                 decisioni strategiche per la crescita
               </p>
-              <div className="gap-4 max-w-md mx-auto">
+              <div className="mx-auto md:max-w-2xl grid gap-4">
                 <img
                   src="/screenshot-dashboard.2.png"
                   alt="Dashboard AI Analytics"
                   className="w-full rounded-lg mb-6 scale-110 sm:scale-100 transition-transform duration-300"
                 />
               </div>
-              <p className="font-body text-sm text-gray-600 mt-4 font-medium">
-                Dashboard Performance Team
-              </p>
+              <div className="bg-yellow-50 rounded-lg p-4 flex items-center justify-center h-12">
+                <p className="font-body text-sm text-gray-700 font-medium">
+                  Profilo del talento · Vista HR
+                </p>
+              </div>
             </div>
           </motion.div>
         </div>
@@ -303,7 +307,7 @@ export default function LandingPage() {
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-16">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-3 gap-8">
             {/* Logo & Description */}
             <div>
               <div className="flex items-center gap-3 ">
@@ -331,26 +335,17 @@ export default function LandingPage() {
               </div>
             </div>
 
-            {/* Resources */}
-            <div>
-              <h4 className="footer-heading">Risorse</h4>
-              <div className="space-y-2">
-                {footerLinks.resources.map((link) => (
-                  <a key={link} href="#" className="footer-link">
-                    {link}
-                  </a>
-                ))}
-              </div>
-            </div>
-
             {/* Contact */}
             <div>
               <h4 className="footer-heading">Contatti</h4>
               <div className="space-y-3">
-                <div className="flex items-center gap-3 text-gray-400">
+                <a 
+                  href={`mailto:${contactInfo.email}`}
+                  className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors"
+                >
                   <Mail className="w-5 h-5" />
                   <span className="font-body">{contactInfo.email}</span>
-                </div>
+                </a>
                 <div className="flex items-center gap-3 text-gray-400">
                   <Phone className="w-5 h-5" />
                   <span className="font-body">{contactInfo.phone}</span>
@@ -358,6 +353,20 @@ export default function LandingPage() {
                 <div className="flex items-center gap-3 text-gray-400">
                   <MapPin className="w-5 h-5" />
                   <span className="font-body">{contactInfo.location}</span>
+                </div>
+                
+                <div className="mt-6">
+                  <h5 className="font-heading text-white text-sm font-semibold mb-3">Seguici</h5>
+                  <div className="flex gap-3">
+                    <a
+                      href="https://www.linkedin.com/company/moobeeai?trk=public_profile_experience-item_profile-section-card_image-click"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-400 hover:text-white transition-colors"
+                    >
+                      <Linkedin className="w-5 h-5" />
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>

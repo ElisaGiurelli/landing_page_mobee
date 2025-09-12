@@ -21,7 +21,7 @@ export default function HeroSection({ openDemoModal }: HeroSectionProps) {
             transition={{ duration: 0.8 }}
           >
             <h1 className="font-heading text-5xl md:text-6xl font-bold leading-tight mb-6">
-              Costruisci un lavoro dove i{" "}
+              Costruisci un ambiente dove i{" "}
               <span className="text-yellow-500">talenti</span>
               <br /> scelgono di
               <span className="text-purple-600"> restare</span>
@@ -68,7 +68,11 @@ export default function HeroSection({ openDemoModal }: HeroSectionProps) {
           >
             <div className="relative bg-white rounded-3xl shadow-2xl p-8">
               <div className="flex items-center gap-3 mb-6">
-                <MoobeLogo className="text-purple-600" width={140} height={120} />
+                <MoobeLogo
+                  className="text-purple-600"
+                  width={140}
+                  height={120}
+                />
               </div>
 
               <div className="grid  gap-4 mb-6">

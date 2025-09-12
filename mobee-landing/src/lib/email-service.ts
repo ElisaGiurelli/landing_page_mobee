@@ -1,4 +1,4 @@
-import nodemailer, { Transporter } from 'nodemailer';
+import nodemailer, { Transporter } from "nodemailer";
 
 interface DemoRequestData {
   nome: string;
@@ -23,30 +23,35 @@ interface LogContext {
 }
 
 // Structured error logging helper
-const logError = (functionName: string, phase: string, error: unknown, context: LogContext = {}): EmailError => {
+const logError = (
+  functionName: string,
+  phase: string,
+  error: unknown,
+  context: LogContext = {}
+): EmailError => {
   const timestamp = new Date().toISOString();
   const errorDetails = {
-    message: (error as Error)?.message || 'Unknown error',
-    stack: (error as Error)?.stack || 'No stack trace',
-    code: (error as NodeJS.ErrnoException)?.code || 'NO_CODE',
-    errno: (error as NodeJS.ErrnoException)?.errno || 'NO_ERRNO',
-    syscall: (error as NodeJS.ErrnoException)?.syscall || 'NO_SYSCALL'
+    message: (error as Error)?.message || "Unknown error",
+    stack: (error as Error)?.stack || "No stack trace",
+    code: (error as NodeJS.ErrnoException)?.code || "NO_CODE",
+    errno: (error as NodeJS.ErrnoException)?.errno || "NO_ERRNO",
+    syscall: (error as NodeJS.ErrnoException)?.syscall || "NO_SYSCALL",
   };
-  
+
   console.error(`[${functionName}] Failed at ${phase}`, {
     timestamp,
     error: errorDetails,
     context,
-    fullError: error
+    fullError: error,
   });
-  
+
   return {
     statusCode: getStatusCodeFromError(error, phase),
     message: getUserFriendlyMessage(phase, error),
     details: `${functionName} - ${phase}: ${errorDetails.message}`,
     timestamp,
     functionName,
-    phase
+    phase,
   };
 };
 
@@ -54,17 +59,17 @@ const logError = (functionName: string, phase: string, error: unknown, context: 
 const getStatusCodeFromError = (error: unknown, phase: string): number => {
   const errCode = (error as NodeJS.ErrnoException)?.code;
   const responseCode = (error as { responseCode?: number })?.responseCode;
-  
-  if (errCode === 'EAUTH' || errCode === 'ENOTFOUND' || responseCode === 535) {
+
+  if (errCode === "EAUTH" || errCode === "ENOTFOUND" || responseCode === 535) {
     return 503; // Service unavailable - SMTP issues
   }
-  if (errCode === 'ETIMEDOUT' || errCode === 'ECONNREFUSED') {
+  if (errCode === "ETIMEDOUT" || errCode === "ECONNREFUSED") {
     return 503; // Service unavailable - connection issues
   }
-  if (phase.includes('validation') || phase.includes('input')) {
+  if (phase.includes("validation") || phase.includes("input")) {
     return 400; // Bad request - validation errors
   }
-  if (phase.includes('configuration') || phase.includes('setup')) {
+  if (phase.includes("configuration") || phase.includes("setup")) {
     return 500; // Internal server error - configuration issues
   }
   return 500; // Default internal server error
@@ -74,128 +79,162 @@ const getStatusCodeFromError = (error: unknown, phase: string): number => {
 const getUserFriendlyMessage = (phase: string, error: unknown): string => {
   const errCode = (error as NodeJS.ErrnoException)?.code;
   const responseCode = (error as { responseCode?: number })?.responseCode;
-  
-  if (errCode === 'EAUTH' || responseCode === 535) {
-    return 'Email service authentication failed. Please contact support.';
+
+  if (errCode === "EAUTH" || responseCode === 535) {
+    return "Email service authentication failed. Please contact support.";
   }
-  if (errCode === 'ETIMEDOUT') {
-    return 'Email service temporarily unavailable due to timeout. Please try again later.';
+  if (errCode === "ETIMEDOUT") {
+    return "Email service temporarily unavailable due to timeout. Please try again later.";
   }
-  if (errCode === 'ECONNREFUSED' || errCode === 'ENOTFOUND') {
-    return 'Email service temporarily unavailable. Please try again later.';
+  if (errCode === "ECONNREFUSED" || errCode === "ENOTFOUND") {
+    return "Email service temporarily unavailable. Please try again later.";
   }
-  if (phase.includes('validation')) {
-    return 'Invalid email data provided. Please check your information.';
+  if (phase.includes("validation")) {
+    return "Invalid email data provided. Please check your information.";
   }
-  return 'Email service temporarily unavailable. Please try again later.';
+  return "Email service temporarily unavailable. Please try again later.";
 };
 
 // Input validation helper
-const validateDemoRequestData = (data: unknown): { isValid: boolean; errors: string[] } => {
+const validateDemoRequestData = (
+  data: unknown
+): { isValid: boolean; errors: string[] } => {
   const errors: string[] = [];
-  
-  if (!data || typeof data !== 'object') {
-    errors.push('No data provided');
+
+  if (!data || typeof data !== "object") {
+    errors.push("No data provided");
     return { isValid: false, errors };
   }
-  
+
   const dataObj = data as Record<string, unknown>;
-  
-  if (!dataObj.nome || typeof dataObj.nome !== 'string' || dataObj.nome.trim().length === 0) {
-    errors.push('Nome is required and must be a non-empty string');
+
+  if (
+    !dataObj.nome ||
+    typeof dataObj.nome !== "string" ||
+    dataObj.nome.trim().length === 0
+  ) {
+    errors.push("Nome is required and must be a non-empty string");
   }
-  
-  if (!dataObj.cognome || typeof dataObj.cognome !== 'string' || dataObj.cognome.trim().length === 0) {
-    errors.push('Cognome is required and must be a non-empty string');
+
+  if (
+    !dataObj.cognome ||
+    typeof dataObj.cognome !== "string" ||
+    dataObj.cognome.trim().length === 0
+  ) {
+    errors.push("Cognome is required and must be a non-empty string");
   }
-  
-  if (!dataObj.email || typeof dataObj.email !== 'string') {
-    errors.push('Email is required and must be a string');
+
+  if (!dataObj.email || typeof dataObj.email !== "string") {
+    errors.push("Email is required and must be a string");
   } else {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(dataObj.email)) {
-      errors.push('Email must be a valid email address');
+      errors.push("Email must be a valid email address");
     }
   }
-  
-  if (!dataObj.azienda || typeof dataObj.azienda !== 'string' || dataObj.azienda.trim().length === 0) {
-    errors.push('Azienda is required and must be a non-empty string');
+
+  if (
+    !dataObj.azienda ||
+    typeof dataObj.azienda !== "string" ||
+    dataObj.azienda.trim().length === 0
+  ) {
+    errors.push("Azienda is required and must be a non-empty string");
   }
-  
-  if (!dataObj.ruolo || typeof dataObj.ruolo !== 'string' || dataObj.ruolo.trim().length === 0) {
-    errors.push('Ruolo is required and must be a non-empty string');
+
+  if (
+    !dataObj.ruolo ||
+    typeof dataObj.ruolo !== "string" ||
+    dataObj.ruolo.trim().length === 0
+  ) {
+    errors.push("Ruolo is required and must be a non-empty string");
   }
-  
-  if (dataObj.telefono && typeof dataObj.telefono !== 'string') {
-    errors.push('Telefono must be a string if provided');
+
+  if (dataObj.telefono && typeof dataObj.telefono !== "string") {
+    errors.push("Telefono must be a string if provided");
   }
-  
+
   return { isValid: errors.length === 0, errors };
 };
 
 // SMTP configuration validation
-const validateSMTPConfig = (): { isValid: boolean; errors: string[]; config: Record<string, unknown> } => {
+const validateSMTPConfig = (): {
+  isValid: boolean;
+  errors: string[];
+  config: Record<string, unknown>;
+} => {
   const errors: string[] = [];
   const config = {
-    host: process.env.SMTP_HOST || 'smtp.gmail.com',
-    port: process.env.SMTP_PORT || '587',
+    host: process.env.SMTP_HOST || "smtp.gmail.com",
+    port: process.env.SMTP_PORT || "587",
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS,
-    adminEmail: process.env.ADMIN_EMAIL
+    adminEmail: process.env.ADMIN_EMAIL,
   };
-  
+
   if (!config.user) {
-    errors.push('SMTP_USER environment variable is required');
+    errors.push("SMTP_USER environment variable is required");
   }
-  
+
   if (!config.pass) {
-    errors.push('SMTP_PASS environment variable is required');
+    errors.push("SMTP_PASS environment variable is required");
   }
-  
+
   if (!config.adminEmail) {
-    errors.push('ADMIN_EMAIL environment variable is required');
+    errors.push("ADMIN_EMAIL environment variable is required");
   }
-  
+
   return { isValid: errors.length === 0, errors, config };
 };
 
 // Create transporter with automatic Ethereal fallback for development
-const createTransporter = async (): Promise<{ transporter: Transporter | null; error?: EmailError }> => {
-  const functionName = 'createTransporter';
+const createTransporter = async (): Promise<{
+  transporter: Transporter | null;
+  error?: EmailError;
+}> => {
+  const functionName = "createTransporter";
   console.log(`[${functionName}] Starting email transporter creation`);
-  
+
   try {
     // Validate SMTP configuration first
     console.log(`[${functionName}] Validating SMTP configuration`);
     validateSMTPConfig();
-    
+
     const configInfo = {
-      host: process.env.SMTP_HOST || 'smtp.gmail.com',
-      port: process.env.SMTP_PORT || '587',
-      user: process.env.SMTP_USER ? 'configured' : 'missing',
-      pass: process.env.SMTP_PASS ? 'configured' : 'missing',
-      adminEmail: process.env.ADMIN_EMAIL ? 'configured' : 'missing'
+      host: process.env.SMTP_HOST || "smtp.gmail.com",
+      port: process.env.SMTP_PORT || "587",
+      user: process.env.SMTP_USER ? "configured" : "missing",
+      pass: process.env.SMTP_PASS ? "configured" : "missing",
+      adminEmail: process.env.ADMIN_EMAIL ? "configured" : "missing",
     };
-    
+
     console.log(`[${functionName}] SMTP configuration:`, configInfo);
 
     // If we don't have proper SMTP credentials, create test account
-    if (!process.env.SMTP_USER || !process.env.SMTP_PASS || process.env.SMTP_USER === 'demo_user') {
-      console.log(`[${functionName}] Missing production SMTP credentials, creating Ethereal test account`);
-      
+    if (
+      !process.env.SMTP_USER ||
+      !process.env.SMTP_PASS ||
+      process.env.SMTP_USER === "demo_user"
+    ) {
+      console.log(
+        `[${functionName}] Missing production SMTP credentials, creating Ethereal test account`
+      );
+
       try {
         console.log(`[${functionName}] Requesting Ethereal test account`);
         const testAccount = await nodemailer.createTestAccount();
-        
-        console.log(`[${functionName}] Ethereal test account created successfully:`, {
-          user: testAccount.user,
-          pass: testAccount.pass.substring(0, 4) + '***',
-          web: testAccount.web
-        });
-        
+
+        console.log(
+          `[${functionName}] Ethereal test account created successfully:`,
+          {
+            user: testAccount.user,
+            pass: testAccount.pass.substring(0, 4) + "***",
+            web: testAccount.web,
+          }
+        );
+
         console.log(`[${functionName}] Creating Ethereal transporter`);
         const transporter = nodemailer.createTransport({
-          host: 'smtp.ethereal.email',
+          host: "smtp.ethereal.email",
           port: 587,
           secure: false,
           auth: {
@@ -206,26 +245,29 @@ const createTransporter = async (): Promise<{ transporter: Transporter | null; e
           greetingTimeout: 5000,
           socketTimeout: 10000,
         });
-        
-        console.log(`[${functionName}] Ethereal transporter created successfully`);
+
+        console.log(
+          `[${functionName}] Ethereal transporter created successfully`
+        );
         return { transporter };
-        
       } catch (error) {
-        logError(functionName, 'creating Ethereal test account', error, {
-          phase: 'ethereal_account_creation',
-          host: 'smtp.ethereal.email'
+        logError(functionName, "creating Ethereal test account", error, {
+          phase: "ethereal_account_creation",
+          host: "smtp.ethereal.email",
         });
-        
-        console.log(`[${functionName}] Falling back to basic configuration after Ethereal failure`);
+
+        console.log(
+          `[${functionName}] Falling back to basic configuration after Ethereal failure`
+        );
         // Continue to fallback configuration
       }
     }
 
     console.log(`[${functionName}] Creating production SMTP transporter`);
-    
+
     const transporterConfig = {
-      host: process.env.SMTP_HOST || 'smtp.gmail.com',
-      port: parseInt(process.env.SMTP_PORT || '587'),
+      host: process.env.SMTP_HOST || "smtp.gmail.com",
+      port: parseInt(process.env.SMTP_PORT || "587"),
       secure: false, // true for 465, false for other ports
       auth: {
         user: process.env.SMTP_USER,
@@ -235,92 +277,117 @@ const createTransporter = async (): Promise<{ transporter: Transporter | null; e
       greetingTimeout: 5000, // 5 seconds
       socketTimeout: 10000, // 10 seconds
     };
-    
+
     console.log(`[${functionName}] Transporter config:`, {
       ...transporterConfig,
       auth: {
-        user: transporterConfig.auth.user ? 'configured' : 'missing',
-        pass: transporterConfig.auth.pass ? 'configured' : 'missing'
-      }
+        user: transporterConfig.auth.user ? "configured" : "missing",
+        pass: transporterConfig.auth.pass ? "configured" : "missing",
+      },
     });
-    
+
     const transporter = nodemailer.createTransport(transporterConfig);
-    
+
     // Test the connection
     console.log(`[${functionName}] Testing SMTP connection`);
     try {
       await transporter.verify();
       console.log(`[${functionName}] SMTP connection verified successfully`);
     } catch (verifyError: unknown) {
-      console.warn(`[${functionName}] SMTP verification failed (will attempt to send anyway):`, {
-        error: (verifyError as Error)?.message || 'Unknown error',
-        code: (verifyError as NodeJS.ErrnoException)?.code || 'NO_CODE'
-      });
+      console.warn(
+        `[${functionName}] SMTP verification failed (will attempt to send anyway):`,
+        {
+          error: (verifyError as Error)?.message || "Unknown error",
+          code: (verifyError as NodeJS.ErrnoException)?.code || "NO_CODE",
+        }
+      );
     }
-    
+
     console.log(`[${functionName}] Transporter created successfully`);
     return { transporter };
-    
   } catch (error) {
-    const emailError = logError(functionName, 'creating transporter', error, {
-      phase: 'transporter_creation',
-      smtpHost: process.env.SMTP_HOST || 'smtp.gmail.com',
-      smtpPort: process.env.SMTP_PORT || '587'
+    const emailError = logError(functionName, "creating transporter", error, {
+      phase: "transporter_creation",
+      smtpHost: process.env.SMTP_HOST || "smtp.gmail.com",
+      smtpPort: process.env.SMTP_PORT || "587",
     });
-    
+
     return { transporter: null, error: emailError };
   }
 };
 
 // Send notification email to admin
-export async function sendAdminNotification(data: DemoRequestData): Promise<{ success: boolean; result?: unknown; error?: EmailError }> {
-  const functionName = 'sendAdminNotification';
-  const requestId = `admin_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-  
-  console.log(`[${functionName}] Starting admin notification process - Request ID: ${requestId}`);
+export async function sendAdminNotification(
+  data: DemoRequestData
+): Promise<{ success: boolean; result?: unknown; error?: EmailError }> {
+  const functionName = "sendAdminNotification";
+  const requestId = `admin_${Date.now()}_${Math.random()
+    .toString(36)
+    .substr(2, 9)}`;
+
+  console.log(
+    `[${functionName}] Starting admin notification process - Request ID: ${requestId}`
+  );
   console.log(`[${functionName}] Input data:`, {
-    nome: data?.nome || 'missing',
-    cognome: data?.cognome || 'missing',
-    email: data?.email || 'missing',
-    azienda: data?.azienda || 'missing',
-    ruolo: data?.ruolo || 'missing',
-    telefono: data?.telefono || 'not provided'
+    nome: data?.nome || "missing",
+    cognome: data?.cognome || "missing",
+    email: data?.email || "missing",
+    azienda: data?.azienda || "missing",
+    ruolo: data?.ruolo || "missing",
+    telefono: data?.telefono || "not provided",
   });
-  
+
   try {
     // Validate input data
-    console.log(`[${functionName}] Validating input data - Request ID: ${requestId}`);
+    console.log(
+      `[${functionName}] Validating input data - Request ID: ${requestId}`
+    );
     const validation = validateDemoRequestData(data);
-    
+
     if (!validation.isValid) {
-      const error = new Error(`Input validation failed: ${validation.errors.join(', ')}`);
+      const error = new Error(
+        `Input validation failed: ${validation.errors.join(", ")}`
+      );
       return {
         success: false,
-        error: logError(functionName, 'input validation', error, {
+        error: logError(functionName, "input validation", error, {
           requestId,
           validationErrors: validation.errors,
-          receivedData: data
-        })
+          receivedData: data,
+        }),
       };
     }
-    
-    console.log(`[${functionName}] Input validation passed - Request ID: ${requestId}`);
-    
+
+    console.log(
+      `[${functionName}] Input validation passed - Request ID: ${requestId}`
+    );
+
     // Create transporter
-    console.log(`[${functionName}] Creating email transporter - Request ID: ${requestId}`);
+    console.log(
+      `[${functionName}] Creating email transporter - Request ID: ${requestId}`
+    );
     const transporterResult = await createTransporter();
-    
+
     if (transporterResult.error || !transporterResult.transporter) {
       return {
         success: false,
-        error: transporterResult.error || logError(functionName, 'transporter creation', new Error('Failed to create transporter'), { requestId })
+        error:
+          transporterResult.error ||
+          logError(
+            functionName,
+            "transporter creation",
+            new Error("Failed to create transporter"),
+            { requestId }
+          ),
       };
     }
-    
+
     const transporter = transporterResult.transporter;
-    console.log(`[${functionName}] Transporter created successfully - Request ID: ${requestId}`);
-  
-  const htmlContent = `
+    console.log(
+      `[${functionName}] Transporter created successfully - Request ID: ${requestId}`
+    );
+
+    const htmlContent = `
     <!DOCTYPE html>
     <html>
     <head>
@@ -340,30 +407,44 @@ export async function sendAdminNotification(data: DemoRequestData): Promise<{ su
           <table style="width: 100%; border-collapse: collapse;">
             <tr>
               <td style="padding: 12px 0; border-bottom: 1px solid #e2e8f0; font-weight: bold; color: #4a5568; width: 120px;">Nome:</td>
-              <td style="padding: 12px 0; border-bottom: 1px solid #e2e8f0; color: #2d3748;">${data.nome} ${data.cognome}</td>
+              <td style="padding: 12px 0; border-bottom: 1px solid #e2e8f0; color: #2d3748;">${
+                data.nome
+              } ${data.cognome}</td>
             </tr>
             <tr>
               <td style="padding: 12px 0; border-bottom: 1px solid #e2e8f0; font-weight: bold; color: #4a5568;">Email:</td>
               <td style="padding: 12px 0; border-bottom: 1px solid #e2e8f0; color: #2d3748;">
-                <a href="mailto:${data.email}" style="color: #7c3aed; text-decoration: none;">${data.email}</a>
+                <a href="mailto:${
+                  data.email
+                }" style="color: #7c3aed; text-decoration: none;">${
+      data.email
+    }</a>
               </td>
             </tr>
             <tr>
               <td style="padding: 12px 0; border-bottom: 1px solid #e2e8f0; font-weight: bold; color: #4a5568;">Azienda:</td>
-              <td style="padding: 12px 0; border-bottom: 1px solid #e2e8f0; color: #2d3748;">${data.azienda}</td>
+              <td style="padding: 12px 0; border-bottom: 1px solid #e2e8f0; color: #2d3748;">${
+                data.azienda
+              }</td>
             </tr>
             <tr>
               <td style="padding: 12px 0; border-bottom: 1px solid #e2e8f0; font-weight: bold; color: #4a5568;">Ruolo:</td>
-              <td style="padding: 12px 0; border-bottom: 1px solid #e2e8f0; color: #2d3748;">${data.ruolo}</td>
+              <td style="padding: 12px 0; border-bottom: 1px solid #e2e8f0; color: #2d3748;">${
+                data.ruolo
+              }</td>
             </tr>
-            ${data.telefono ? `
+            ${
+              data.telefono
+                ? `
             <tr>
               <td style="padding: 12px 0; font-weight: bold; color: #4a5568;">Telefono:</td>
               <td style="padding: 12px 0; color: #2d3748;">
                 <a href="tel:${data.telefono}" style="color: #7c3aed; text-decoration: none;">${data.telefono}</a>
               </td>
             </tr>
-            ` : ''}
+            `
+                : ""
+            }
           </table>
         </div>
         
@@ -375,7 +456,7 @@ export async function sendAdminNotification(data: DemoRequestData): Promise<{ su
         
         <div style="text-align: center; margin-top: 30px;">
           <p style="color: #6b7280; font-size: 14px; margin: 0;">
-            Richiesta ricevuta il ${new Date().toLocaleString('it-IT')}
+            Richiesta ricevuta il ${new Date().toLocaleString("it-IT")}
           </p>
         </div>
       </div>
@@ -383,7 +464,9 @@ export async function sendAdminNotification(data: DemoRequestData): Promise<{ su
     </html>
   `;
 
-    console.log(`[${functionName}] Preparing mail options - Request ID: ${requestId}`);
+    console.log(
+      `[${functionName}] Preparing mail options - Request ID: ${requestId}`
+    );
     const mailOptions = {
       from: `"Moobe Platform" <${process.env.SMTP_USER}>`,
       to: process.env.ADMIN_EMAIL,
@@ -394,94 +477,125 @@ export async function sendAdminNotification(data: DemoRequestData): Promise<{ su
 Email: ${data.email}
 Azienda: ${data.azienda}
 Ruolo: ${data.ruolo}
-${data.telefono ? `Telefono: ${data.telefono}` : ''}
+${data.telefono ? `Telefono: ${data.telefono}` : ""}
 
-Ricevuta il: ${new Date().toLocaleString('it-IT')}`,
+Ricevuta il: ${new Date().toLocaleString("it-IT")}`,
     };
 
     // Send the email
-    console.log(`[${functionName}] Sending admin notification email - Request ID: ${requestId}`);
+    console.log(
+      `[${functionName}] Sending admin notification email - Request ID: ${requestId}`
+    );
     console.log(`[${functionName}] Mail options:`, {
       from: mailOptions.from,
       to: mailOptions.to,
       subject: mailOptions.subject,
       hasHtml: !!mailOptions.html,
-      hasText: !!mailOptions.text
+      hasText: !!mailOptions.text,
     });
-    
+
     const result = await transporter.sendMail(mailOptions);
-    
-    console.log(`[${functionName}] Admin notification sent successfully - Request ID: ${requestId}`);
+
+    console.log(
+      `[${functionName}] Admin notification sent successfully - Request ID: ${requestId}`
+    );
     console.log(`[${functionName}] Send result:`, {
       messageId: result.messageId,
       accepted: result.accepted,
       rejected: result.rejected,
       pending: result.pending,
-      response: result.response
+      response: result.response,
     });
-    
+
     return { success: true, result };
-    
   } catch (error) {
-    const emailError = logError(functionName, 'sending admin notification', error, {
-      requestId,
-      recipientEmail: process.env.ADMIN_EMAIL,
-      senderData: data
-    });
-    
+    const emailError = logError(
+      functionName,
+      "sending admin notification",
+      error,
+      {
+        requestId,
+        recipientEmail: process.env.ADMIN_EMAIL,
+        senderData: data,
+      }
+    );
+
     return { success: false, error: emailError };
   }
 }
 
 // Send confirmation email to user
-export async function sendUserConfirmation(data: DemoRequestData): Promise<{ success: boolean; result?: unknown; error?: EmailError }> {
-  const functionName = 'sendUserConfirmation';
-  const requestId = `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-  
-  console.log(`[${functionName}] Starting user confirmation process - Request ID: ${requestId}`);
+export async function sendUserConfirmation(
+  data: DemoRequestData
+): Promise<{ success: boolean; result?: unknown; error?: EmailError }> {
+  const functionName = "sendUserConfirmation";
+  const requestId = `user_${Date.now()}_${Math.random()
+    .toString(36)
+    .substr(2, 9)}`;
+
+  console.log(
+    `[${functionName}] Starting user confirmation process - Request ID: ${requestId}`
+  );
   console.log(`[${functionName}] Input data:`, {
-    nome: data?.nome || 'missing',
-    cognome: data?.cognome || 'missing',
-    email: data?.email || 'missing',
-    azienda: data?.azienda || 'missing',
-    ruolo: data?.ruolo || 'missing',
-    telefono: data?.telefono || 'not provided'
+    nome: data?.nome || "missing",
+    cognome: data?.cognome || "missing",
+    email: data?.email || "missing",
+    azienda: data?.azienda || "missing",
+    ruolo: data?.ruolo || "missing",
+    telefono: data?.telefono || "not provided",
   });
-  
+
   try {
     // Validate input data
-    console.log(`[${functionName}] Validating input data - Request ID: ${requestId}`);
+    console.log(
+      `[${functionName}] Validating input data - Request ID: ${requestId}`
+    );
     const validation = validateDemoRequestData(data);
-    
+
     if (!validation.isValid) {
-      const error = new Error(`Input validation failed: ${validation.errors.join(', ')}`);
+      const error = new Error(
+        `Input validation failed: ${validation.errors.join(", ")}`
+      );
       return {
         success: false,
-        error: logError(functionName, 'input validation', error, {
+        error: logError(functionName, "input validation", error, {
           requestId,
           validationErrors: validation.errors,
-          receivedData: data
-        })
+          receivedData: data,
+        }),
       };
     }
-    
-    console.log(`[${functionName}] Input validation passed - Request ID: ${requestId}`);
-    
+
+    console.log(
+      `[${functionName}] Input validation passed - Request ID: ${requestId}`
+    );
+
     // Create transporter
-    console.log(`[${functionName}] Creating email transporter - Request ID: ${requestId}`);
+    console.log(
+      `[${functionName}] Creating email transporter - Request ID: ${requestId}`
+    );
     const transporterResult = await createTransporter();
-    
+
     if (transporterResult.error || !transporterResult.transporter) {
       return {
         success: false,
-        error: transporterResult.error || logError(functionName, 'transporter creation', new Error('Failed to create transporter'), { requestId })
+        error:
+          transporterResult.error ||
+          logError(
+            functionName,
+            "transporter creation",
+            new Error("Failed to create transporter"),
+            { requestId }
+          ),
       };
     }
-    
+
     const transporter = transporterResult.transporter;
-    console.log(`[${functionName}] Transporter created successfully - Request ID: ${requestId}`);
-  
-  const htmlContent = `
+    console.log(
+      `[${functionName}] Transporter created successfully - Request ID: ${requestId}`
+    );
+
+    const htmlContent = `
     <!DOCTYPE html>
     <html>
     <head>
@@ -578,11 +692,13 @@ export async function sendUserConfirmation(data: DemoRequestData): Promise<{ suc
     </html>
   `;
 
-    console.log(`[${functionName}] Preparing mail options - Request ID: ${requestId}`);
+    console.log(
+      `[${functionName}] Preparing mail options - Request ID: ${requestId}`
+    );
     const mailOptions = {
       from: `"Moobe Team" <${process.env.SMTP_USER}>`,
       to: data.email,
-      subject: 'Conferma Richiesta Demo - Moobe AI Talent Management',
+      subject: "Conferma Richiesta Demo - Moobe AI Talent Management",
       html: htmlContent,
       text: `Ciao ${data.nome},
 
@@ -595,6 +711,7 @@ Un nostro specialista ti contatterà entro 24 ore per fissare un appuntamento pe
 Nel frattempo, puoi visitare il nostro sito per scoprire di più sulle nostre funzionalità.
 
 Hai domande? Contattaci:
+- Linkedin: https://www.linkedin.com/company/mobeeai?trk=public_profile_topcard-current-company
 - Email: mobee.mirai@gmail.com  
 - Telefono: +39 338 1903839
 
@@ -606,35 +723,43 @@ Team Moobe
     };
 
     // Send the email
-    console.log(`[${functionName}] Sending user confirmation email - Request ID: ${requestId}`);
+    console.log(
+      `[${functionName}] Sending user confirmation email - Request ID: ${requestId}`
+    );
     console.log(`[${functionName}] Mail options:`, {
       from: mailOptions.from,
       to: mailOptions.to,
       subject: mailOptions.subject,
       hasHtml: !!mailOptions.html,
-      hasText: !!mailOptions.text
+      hasText: !!mailOptions.text,
     });
-    
+
     const result = await transporter.sendMail(mailOptions);
-    
-    console.log(`[${functionName}] User confirmation sent successfully - Request ID: ${requestId}`);
+
+    console.log(
+      `[${functionName}] User confirmation sent successfully - Request ID: ${requestId}`
+    );
     console.log(`[${functionName}] Send result:`, {
       messageId: result.messageId,
       accepted: result.accepted,
       rejected: result.rejected,
       pending: result.pending,
-      response: result.response
+      response: result.response,
     });
-    
+
     return { success: true, result };
-    
   } catch (error) {
-    const emailError = logError(functionName, 'sending user confirmation', error, {
-      requestId,
-      recipientEmail: data.email,
-      senderData: data
-    });
-    
+    const emailError = logError(
+      functionName,
+      "sending user confirmation",
+      error,
+      {
+        requestId,
+        recipientEmail: data.email,
+        senderData: data,
+      }
+    );
+
     return { success: false, error: emailError };
   }
 }
