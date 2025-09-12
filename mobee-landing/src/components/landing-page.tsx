@@ -215,20 +215,18 @@ export default function LandingPage() {
           >
             <div className="bg-white rounded-2xl p-8 border border-purple-100 shadow-sm">
               <h3 className="font-heading text-2xl font-bold text-gray-800 mb-4">
-                Meno caos operativo, più risultati
+                Monitora e valorizza ogni talento
               </h3>
               <p className="font-body text-gray-600 mb-6">
-                Visualizzazione dashboard con metriche di performance del team
+                Dashboard intelligenti per HR manager che trasformano i dati in
+                decisioni strategiche per la crescita
               </p>
-              <div className="grid grid-cols-3 gap-4 max-w-md mx-auto">
-                {[...Array(9)].map((_, i) => (
-                  <div
-                    key={i}
-                    className={`h-8 rounded ${
-                      i < 6 ? "bg-green-100" : "bg-gray-100"
-                    }`}
-                  />
-                ))}
+              <div className="gap-4 max-w-md mx-auto">
+                <img
+                  src="/screenshot-dashboard.2.png"
+                  alt="Dashboard AI Analytics"
+                  className="w-full rounded-lg mb-6 scale-110 sm:scale-100 transition-transform duration-300"
+                />
               </div>
               <p className="font-body text-sm text-gray-600 mt-4 font-medium">
                 Dashboard Performance Team
