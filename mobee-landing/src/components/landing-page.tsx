@@ -92,8 +92,8 @@ export default function LandingPage() {
                 <span className="text-purple-500">talenti esistenti</span>
               </h2>
               <p className="font-body text-xl text-gray-600 mb-8">
-                Moobee è la prima piattaforma AI Assistant in Italia per Talent
-                Management che aumenta l&apos;engagement e semplifica la
+                Moobee è la piattaforma di AI Assistant per il Talent Management
+                in Italia, che aumenta l&apos;engagement e semplifica la
                 pianificazione in base a skill, disponibilità e preferenze.
               </p>
 
